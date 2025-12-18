@@ -15,6 +15,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 
+        // Validate configuration - warns if secrets are missing
+        AppConfiguration.validateConfiguration()
+
         // Configure DesignSystem FIRST, before any UI is created
         DesignSystem.configureWithDefaults()
 

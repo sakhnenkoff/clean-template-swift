@@ -38,11 +38,11 @@ class ShowcasePresenter {
         auth != nil
     }
 
-    var currentStreakData: CurrentStreakData {
+    var currentStreakData: CurrentStreakData? {
         interactor.currentStreakData
     }
 
-    var currentXPData: CurrentExperiencePointsData {
+    var currentXPData: CurrentExperiencePointsData? {
         interactor.currentExperiencePointsData
     }
 

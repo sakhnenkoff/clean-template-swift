@@ -13,13 +13,13 @@ protocol ShowcaseInteractor: GlobalInteractor {
     var currentUser: UserModel? { get }
 
     // Gamification
-    var currentStreakData: CurrentStreakData { get }
-    var currentExperiencePointsData: CurrentExperiencePointsData { get }
+    var currentStreakData: CurrentStreakData? { get }
+    var currentExperiencePointsData: CurrentExperiencePointsData? { get }
     func getAllProgressItems() -> [ProgressItem]
     @discardableResult
-    func addStreakEvent(metadata: [String: GamificationDictionaryValue]) async throws -> StreakEvent
+    func addStreakEvent(metadata: [String: GamificationDictionaryValue]) async throws -> StreakEvent?
     @discardableResult
-    func addExperiencePoints(points: Int, metadata: [String: GamificationDictionaryValue]) async throws -> ExperiencePointsEvent
+    func addExperiencePoints(points: Int, metadata: [String: GamificationDictionaryValue]) async throws -> ExperiencePointsEvent?
 
     // Purchases
     var isPremium: Bool { get }

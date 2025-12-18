@@ -4,3 +4,7 @@
 PRODUCT_NAME = CleanTemplate
 SWIFT_VERSION = 6.0
 IPHONEOS_DEPLOYMENT_TARGET = 18.0
+
+// Default empty values for secrets (overridden by Secrets.xcconfig.local)
+MIXPANEL_TOKEN =
+REVENUECAT_API_KEY =

@@ -2,6 +2,7 @@
 // Configuration for Development builds
 
 #include "Base.xcconfig"
+#include? "Secrets.xcconfig.local"
 
 PRODUCT_BUNDLE_IDENTIFIER = com.organization.CleanTemplate.dev
 OTHER_SWIFT_FLAGS = $(inherited) -DDEV

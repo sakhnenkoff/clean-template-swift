@@ -52,3 +52,6 @@ fastlane/report.json
 # Environment-specific files
 .env
 .env.*
+
+# Local configuration with secrets (NEVER commit these)
+*.xcconfig.local

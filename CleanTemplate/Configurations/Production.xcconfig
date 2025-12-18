@@ -2,6 +2,7 @@
 // Configuration for Production builds
 
 #include "Base.xcconfig"
+#include? "Secrets.xcconfig.local"
 
 PRODUCT_BUNDLE_IDENTIFIER = com.organization.CleanTemplate
 INFOPLIST_KEY_CFBundleDisplayName = CleanTemplate

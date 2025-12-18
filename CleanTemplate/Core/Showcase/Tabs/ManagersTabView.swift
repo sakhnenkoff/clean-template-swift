@@ -27,8 +27,8 @@ struct ManagersTabView: View {
         }
 
         Section("Streaks") {
-            LabeledContent("Current Streak", value: "\(presenter.currentStreakData.currentStreak ?? 0) days")
-            LabeledContent("Longest Streak", value: "\(presenter.currentStreakData.longestStreak ?? 0) days")
+            LabeledContent("Current Streak", value: "\(presenter.currentStreakData?.currentStreak ?? 0) days")
+            LabeledContent("Longest Streak", value: "\(presenter.currentStreakData?.longestStreak ?? 0) days")
 
             Button("Add Streak Event") {
                 Task {
@@ -38,7 +38,7 @@ struct ManagersTabView: View {
         }
 
         Section("Experience Points") {
-            LabeledContent("Total XP", value: "\(presenter.currentXPData.pointsAllTime ?? 0) pts")
+            LabeledContent("Total XP", value: "\(presenter.currentXPData?.pointsAllTime ?? 0) pts")
 
             Button("Add 10 XP") {
                 Task {

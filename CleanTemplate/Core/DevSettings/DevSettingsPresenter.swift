@@ -43,15 +43,17 @@ class DevSettingsPresenter {
     }
     
     func loadABTests() {
-        boolTest = interactor.activeTests.boolTest
-        enumTest = interactor.activeTests.enumTest
+        guard let activeTests = interactor.activeTests else { return }
+        boolTest = activeTests.boolTest
+        enumTest = activeTests.enumTest
     }
 
     func handleBoolTestChange(oldValue: Bool, newValue: Bool) {
+        guard let activeTests = interactor.activeTests else { return }
         updateTest(
             property: &boolTest,
             newValue: newValue,
-            savedValue: interactor.activeTests.boolTest,
+            savedValue: activeTests.boolTest,
             updateAction: { tests in
                 tests.update(boolTest: newValue)
             }
@@ -59,10 +61,11 @@ class DevSettingsPresenter {
     }
     
     func handleEnumTestChange(oldValue: EnumTestOption, newValue: EnumTestOption) {
+        guard let activeTests = interactor.activeTests else { return }
         updateTest(
             property: &enumTest,
             newValue: newValue,
-            savedValue: interactor.activeTests.enumTest,
+            savedValue: activeTests.enumTest,
             updateAction: { tests in
                 tests.update(enumTest: newValue)
             }
@@ -77,7 +80,7 @@ class DevSettingsPresenter {
     ) {
         if newValue != savedValue {
             do {
-                var tests = interactor.activeTests
+                guard var tests = interactor.activeTests else { return }
                 updateAction(&tests)
                 try interactor.override(updateTests: tests)
             } catch {
