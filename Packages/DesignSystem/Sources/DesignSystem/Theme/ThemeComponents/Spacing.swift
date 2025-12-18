@@ -9,8 +9,14 @@ public struct SpacingScale: Sendable {
     /// Small: 8pt default
     public let sm: CGFloat
 
+    /// Small-Medium: 12pt default
+    public let smd: CGFloat
+
     /// Medium: 16pt default
     public let md: CGFloat
+
+    /// Medium-Large: 20pt default
+    public let mlg: CGFloat
 
     /// Large: 24pt default
     public let lg: CGFloat
@@ -18,22 +24,31 @@ public struct SpacingScale: Sendable {
     /// Extra large: 32pt default
     public let xl: CGFloat
 
+    /// 2X Large: 40pt default
+    public let xxlg: CGFloat
+
     /// Extra extra large: 48pt default
     public let xxl: CGFloat
 
     public init(
-        xs: CGFloat,
-        sm: CGFloat,
-        md: CGFloat,
-        lg: CGFloat,
-        xl: CGFloat,
-        xxl: CGFloat
+        xs: CGFloat = 4,
+        sm: CGFloat = 8,
+        smd: CGFloat = 12,
+        md: CGFloat = 16,
+        mlg: CGFloat = 20,
+        lg: CGFloat = 24,
+        xl: CGFloat = 32,
+        xxlg: CGFloat = 40,
+        xxl: CGFloat = 48
     ) {
         self.xs = xs
         self.sm = sm
+        self.smd = smd
         self.md = md
+        self.mlg = mlg
         self.lg = lg
         self.xl = xl
+        self.xxlg = xxlg
         self.xxl = xxl
     }
 }

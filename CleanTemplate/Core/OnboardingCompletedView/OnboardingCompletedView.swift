@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 struct OnboardingCompletedDelegate {
     var eventParameters: [String: Any]? {
@@ -19,7 +20,7 @@ struct OnboardingCompletedView: View {
     var delegate: OnboardingCompletedDelegate = OnboardingCompletedDelegate()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: DSSpacing.smd) {
             Text("Welcome to our app!")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
@@ -40,7 +41,7 @@ struct OnboardingCompletedView: View {
             )
             .accessibilityIdentifier("FinishButton")
         })
-        .padding(24)
+        .padding(DSSpacing.lg)
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             presenter.onViewAppear(delegate: delegate)

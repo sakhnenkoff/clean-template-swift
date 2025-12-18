@@ -5,6 +5,7 @@
 //  
 //
 import SwiftUI
+import DesignSystem
 
 struct SettingsView: View {
         
@@ -46,7 +47,7 @@ struct SettingsView: View {
             }
             
             Text("Delete account")
-                .foregroundStyle(.red)
+                .foregroundStyle(Color.destructive)
                 .rowFormatting()
                 .anyButton(.highlight) {
                     presenter.onDeleteAccountPressed()
@@ -61,7 +62,7 @@ struct SettingsView: View {
         let isPremium = presenter.isPremium
         
         return Section {
-            HStack(spacing: 8) {
+            HStack(spacing: DSSpacing.sm) {
                 Text("Account status: \(isPremium ? "PREMIUM" : "FREE")")
                 Spacer(minLength: 0)
                 if isPremium {
@@ -81,7 +82,7 @@ struct SettingsView: View {
     
     private var applicationSection: some View {
         Section {
-            HStack(spacing: 8) {
+            HStack(spacing: DSSpacing.sm) {
                 Text("Version")
                 Spacer(minLength: 0)
                 Text(Utilities.appVersion ?? "")
@@ -89,8 +90,8 @@ struct SettingsView: View {
             }
             .rowFormatting()
             .removeListRowFormatting()
-            
-            HStack(spacing: 8) {
+
+            HStack(spacing: DSSpacing.sm) {
                 Text("Build Number")
                 Spacer(minLength: 0)
                 Text(Utilities.buildNumber ?? "")
@@ -100,7 +101,7 @@ struct SettingsView: View {
             .removeListRowFormatting()
             
             Text("Contact us")
-                .foregroundStyle(.blue)
+                .foregroundStyle(Color.link)
                 .rowFormatting()
                 .anyButton(.highlight, action: {
                     presenter.onContactUsPressed()
@@ -123,8 +124,8 @@ private struct RowFormattingViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
+            .padding(.vertical, DSSpacing.smd)
+            .padding(.horizontal, DSSpacing.md)
             .background(colorScheme.backgroundPrimary)
     }
 }

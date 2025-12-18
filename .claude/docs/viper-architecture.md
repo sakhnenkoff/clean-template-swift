@@ -383,6 +383,167 @@ VStack(spacing: 8) {
 
 ---
 
+## 🎨 Color Usage Rules
+
+**CRITICAL: NEVER use hardcoded SwiftUI colors. ALWAYS use DesignSystem tokens.**
+
+### Forbidden - Never Use These:
+- ❌ `Color.red`, `Color.blue`, `Color.green`, `Color.yellow`, `Color.orange`
+- ❌ `Color.white`, `Color.black` (except in DesignSystem package internals)
+- ❌ `Color(uiColor: .systemBackground)` - use `.backgroundPrimary` instead
+- ❌ `Color(hex: "...")` in view files - define in DesignSystem instead
+- ❌ `.foregroundStyle(.red)`, `.foregroundStyle(.blue)`, etc.
+- ❌ `.tint(.green)`, `.tint(.red)`, etc.
+
+### Required - Always Use DesignSystem Tokens:
+
+| Use Case | DesignSystem Token |
+|----------|-------------------|
+| Brand/accent color | `Color.themeAccent` |
+| Primary brand color | `Color.themePrimary` |
+| Error/delete actions | `Color.destructive` |
+| Success states | `Color.success` |
+| Warning states | `Color.warning` |
+| Info/links | `Color.link` |
+| Primary background | `Color.backgroundPrimary` |
+| Secondary background | `Color.backgroundSecondary` |
+| Primary text | `Color.textPrimary` |
+| Muted/secondary text | `.foregroundStyle(.secondary)` (SwiftUI semantic) OR `Color.textSecondary` |
+| Text on dark/accent backgrounds | `Color.textOnPrimary` |
+| Text on accent backgrounds | `Color.textOnAccent` |
+| Borders | `Color.border` |
+| Dividers | `Color.divider` |
+| Modal/overlay backgrounds | `Color.overlayBackground` |
+
+### Examples:
+
+```swift
+// ❌ WRONG
+Text("Delete").foregroundStyle(.red)
+Button("Link").foregroundStyle(.blue)
+VStack { }.background(Color.white)
+.tint(.green)
+
+// ✅ CORRECT
+Text("Delete").foregroundStyle(Color.destructive)
+Button("Link").foregroundStyle(Color.link)
+VStack { }.background(Color.backgroundPrimary)
+.tint(Color.success)
+```
+
+### Button Color Patterns:
+
+```swift
+// Delete/Destructive buttons
+Button("Delete")
+    .tint(Color.destructive)
+
+// Success/Save buttons
+Button("Save")
+    .tint(Color.success)
+
+// Link/Info buttons
+Button("Learn More")
+    .tint(Color.link)
+
+// Text on accent-colored backgrounds
+Text("Submit")
+    .foregroundStyle(Color.textOnPrimary)
+    .background(Color.themeAccent)
+```
+
+### Note on `.secondary`:
+SwiftUI's `.foregroundStyle(.secondary)` is acceptable for muted text because it's a semantic color that adapts to light/dark mode. Our `Color.textSecondary` maps to the same value.
+
+---
+
+## 📏 Spacing Usage Rules
+
+**CRITICAL: NEVER use hardcoded spacing values. ALWAYS use DSSpacing tokens.**
+
+### Forbidden - Never Use These:
+- ❌ `.padding(8)`, `.padding(16)`, `.padding(24)`, etc.
+- ❌ `VStack(spacing: 12)`, `HStack(spacing: 8)`, etc.
+- ❌ `.cornerRadius(16)`, `.cornerRadius(12)`, etc.
+- ❌ `.frame(width: 4, height: 4)` for spacing elements
+- ❌ Any hardcoded CGFloat for padding, spacing, or corner radius
+
+### Required - Always Use DSSpacing Tokens:
+
+| Value | DSSpacing Token | Common Use Cases |
+|-------|-----------------|------------------|
+| 4pt | `DSSpacing.xs` | Tiny gaps, icon spacing, small decorative elements |
+| 8pt | `DSSpacing.sm` | Compact spacing, button internal padding |
+| 12pt | `DSSpacing.smd` | Toast padding, list row spacing, corner radius |
+| 16pt | `DSSpacing.md` | Standard padding, modal content padding |
+| 20pt | `DSSpacing.mlg` | Medium-large gaps |
+| 24pt | `DSSpacing.lg` | Section spacing, card padding |
+| 32pt | `DSSpacing.xl` | Large section gaps |
+| 40pt | `DSSpacing.xxlg` | Extra large spacing, top padding for modals |
+| 48pt | `DSSpacing.xxl` | Maximum spacing, major sections |
+
+### Examples:
+
+```swift
+// ❌ WRONG
+VStack(spacing: 8) { }
+.padding(16)
+.padding(.horizontal, 24)
+.cornerRadius(12)
+.frame(width: 4, height: 4)
+
+// ✅ CORRECT
+VStack(spacing: DSSpacing.sm) { }
+.padding(DSSpacing.md)
+.padding(.horizontal, DSSpacing.lg)
+.cornerRadius(DSSpacing.smd)
+.frame(width: DSSpacing.xs, height: DSSpacing.xs)
+```
+
+### Common Patterns:
+
+```swift
+// Stack spacing
+VStack(spacing: DSSpacing.sm) { }      // 8pt - compact
+VStack(spacing: DSSpacing.smd) { }     // 12pt - comfortable
+VStack(spacing: DSSpacing.lg) { }      // 24pt - spacious
+
+// Padding
+.padding(DSSpacing.md)                  // 16pt - standard content padding
+.padding(.horizontal, DSSpacing.lg)     // 24pt - horizontal margins
+.padding(.top, DSSpacing.xxlg)          // 40pt - large top spacing
+
+// Corner radius
+.cornerRadius(DSSpacing.smd)            // 12pt - cards, buttons
+.cornerRadius(DSSpacing.md)             // 16pt - larger elements
+
+// Safe area insets
+.safeAreaInset(edge: .bottom) {
+    content
+        .padding(DSSpacing.lg)          // 24pt
+}
+```
+
+### Importing DSSpacing:
+
+Always import DesignSystem to access DSSpacing tokens:
+
+```swift
+import SwiftUI
+import DesignSystem  // Required for DSSpacing
+
+struct MyView: View {
+    var body: some View {
+        VStack(spacing: DSSpacing.sm) {
+            // content
+        }
+        .padding(DSSpacing.md)
+    }
+}
+```
+
+---
+
 ## 🖼️ Image Handling
 
 **ALWAYS use ImageLoaderView for loading images from URLs:**

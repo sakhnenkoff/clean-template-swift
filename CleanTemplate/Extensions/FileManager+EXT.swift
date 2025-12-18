@@ -7,7 +7,6 @@
 import Foundation
 
 extension FileManager {
-    
     static func saveDocument<T: Codable>(key: String, value: T?) throws {
         let data = try JSONEncoder().encode(value)
         let url = getDocumentURL(for: key)

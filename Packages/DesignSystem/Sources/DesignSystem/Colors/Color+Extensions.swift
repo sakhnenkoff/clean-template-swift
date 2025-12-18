@@ -2,11 +2,11 @@ import SwiftUI
 
 public extension Color {
 
-    // MARK: - Brand Colors
+    // MARK: - Brand Colors (prefixed to avoid SwiftUI conflicts)
 
-    static var primary: Color { DesignSystem.colors.primary }
-    static var secondary: Color { DesignSystem.colors.secondary }
-    static var accent: Color { DesignSystem.colors.accent }
+    static var themePrimary: Color { DesignSystem.colors.primary }
+    static var themeSecondary: Color { DesignSystem.colors.secondary }
+    static var themeAccent: Color { DesignSystem.colors.accent }
 
     // MARK: - Semantic Colors
 
@@ -34,6 +34,16 @@ public extension Color {
     static var surfaceVariant: Color { DesignSystem.colors.surfaceVariant }
     static var border: Color { DesignSystem.colors.border }
     static var divider: Color { DesignSystem.colors.divider }
+
+    // MARK: - Action Colors
+
+    static var destructive: Color { DesignSystem.colors.error }
+    static var link: Color { DesignSystem.colors.primary }
+
+    // MARK: - Utility Colors
+
+    static var textOnAccent: Color { .white }
+    static var overlayBackground: Color { Color.black.opacity(0.5) }
 
     // MARK: - Hex Initializer
 

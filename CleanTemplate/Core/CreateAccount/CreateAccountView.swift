@@ -7,6 +7,7 @@
 import SwiftUI
 import SwiftfulAuthUI
 import SwiftfulRouting
+import DesignSystem
 
 struct CreateAccountDelegate {
     var title: String = "Create Account?"
@@ -27,8 +28,8 @@ struct CreateAccountView: View {
     var delegate: CreateAccountDelegate = CreateAccountDelegate()
     
     var body: some View {
-        VStack(spacing: 24) {
-            VStack(alignment: .leading, spacing: 8) {
+        VStack(spacing: DSSpacing.lg) {
+            VStack(alignment: .leading, spacing: DSSpacing.sm) {
                 Text(delegate.title)
                     .font(.largeTitle)
                     .fontWeight(.semibold)
@@ -40,8 +41,8 @@ struct CreateAccountView: View {
                     .minimumScaleFactor(0.5)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
-            VStack(spacing: 12) {
+
+            VStack(spacing: DSSpacing.smd) {
                 SignInAppleButtonView(
                     type: .signIn,
                     style: .black,
@@ -53,7 +54,7 @@ struct CreateAccountView: View {
                     presenter.onSignInApplePressed(delegate: delegate)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 SignInGoogleButtonView(
                     type: .signIn,
                     backgroundColor: .googleRed,
@@ -69,8 +70,8 @@ struct CreateAccountView: View {
 
             Spacer()
         }
-        .padding(16)
-        .padding(.top, 40)
+        .padding(DSSpacing.md)
+        .padding(.top, DSSpacing.xxlg)
         .onAppear {
             presenter.onViewAppear(delegate: delegate)
         }

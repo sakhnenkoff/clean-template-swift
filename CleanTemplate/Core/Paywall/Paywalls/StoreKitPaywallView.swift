@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import StoreKit
+import DesignSystem
 
 struct StoreKitPaywallView: View {
     
@@ -15,17 +16,17 @@ struct StoreKitPaywallView: View {
     
     var body: some View {
         SubscriptionStoreView(productIDs: productIds) {
-            VStack(spacing: 8) {
+            VStack(spacing: DSSpacing.sm) {
                 Text("My App 🤙")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
-                
+
                 Text("Get premium access to unlock all features.")
                     .font(.subheadline)
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(Color.textOnPrimary)
             .multilineTextAlignment(.center)
-            .containerBackground(Color.accent.gradient, for: .subscriptionStore)
+            .containerBackground(Color.themeAccent.gradient, for: .subscriptionStore)
         }
         .storeButton(.visible, for: .restorePurchases)
         .subscriptionStoreControlStyle(.prominentPicker)

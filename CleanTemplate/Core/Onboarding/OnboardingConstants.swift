@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftfulOnboarding
+import DesignSystem
 
 @MainActor
 struct OnboardingConstants {
@@ -15,8 +16,23 @@ struct OnboardingConstants {
         headerStyle: .progressBar,
         headerAlignment: .center,
         showBackButton: .afterFirstSlide,
-        backButtonColor: .blue,
-        progressBarAccentColor: .blue
+        backButtonColor: Color.themeAccent,
+        progressBarAccentColor: Color.themeAccent
+    )
+
+    static let slideDefaults = OnbSlideDefaults(
+        ctaButtonStyle: .solid(
+            backgroundColor: Color.themeAccent,
+            textColor: Color.textOnPrimary,
+            selectedBackgroundColor: Color.themeAccent,
+            selectedTextColor: Color.textOnPrimary
+        ),
+        optionsButtonStyle: .solid(
+            backgroundColor: Color.backgroundSecondary,
+            textColor: .primary,
+            selectedBackgroundColor: Color.themeAccent,
+            selectedTextColor: Color.textOnPrimary
+        )
     )
 
     static let slides: [OnbSlideType] = [

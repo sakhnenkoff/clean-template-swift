@@ -17,11 +17,14 @@ struct ToastViewModifier: ViewModifier {
                     ToastView(toast: toast) {
                         dismissToast()
                     }
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .bottom).combined(with: .opacity),
+                        removal: .opacity
+                    ))
                     .padding(.bottom, 50)
                 }
             }
-            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: toast)
+            .animation(.easeOut(duration: 0.25), value: toast)
             .onChange(of: toast) { _, newToast in
                 if let newToast = newToast {
                     scheduleAutoDismiss(duration: newToast.duration)

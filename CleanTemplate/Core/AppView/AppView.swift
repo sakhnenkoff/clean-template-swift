@@ -61,6 +61,7 @@ struct AppView<Content: View>: View {
     
     return builder.appView()
 }
+
 #Preview("AppView - Onboarding") {
     let container = DevPreview.shared.container()
     container.register(UserManager.self, service: UserManager(services: MockUserServices(document: nil)))
@@ -71,7 +72,6 @@ struct AppView<Content: View>: View {
 }
 
 extension CoreBuilder {
-    
     func appView() -> some View {
         AppView(
             presenter: AppPresenter(

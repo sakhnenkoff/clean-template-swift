@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 struct CustomPaywallView: View {
     
@@ -18,37 +19,37 @@ struct CustomPaywallView: View {
     
     var body: some View {
         ZStack {
-            Color.blue.ignoresSafeArea()
-            
+            Color.themeAccent.ignoresSafeArea()
+
             VStack(spacing: 0) {
                 Spacer(minLength: 0)
-                
-                VStack(spacing: 24) {
+
+                VStack(spacing: DSSpacing.lg) {
                     Text(title)
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                     Text(subtitle)
                         .font(.subheadline)
                 }
-                .foregroundStyle(.white)
-                .padding(40)
-                
-                VStack(spacing: 8) {
+                .foregroundStyle(Color.textOnPrimary)
+                .padding(DSSpacing.xxlg)
+
+                VStack(spacing: DSSpacing.sm) {
                     ForEach(products) { product in
                         productRow(product: product)
                     }
-                    
+
                     Text("Already have a subscription?\nRestore Purchase")
                         .font(.callout)
                         .fontWeight(.medium)
                         .underline()
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.textOnPrimary)
                         .anyButton(.plain) {
                             onRestorePurchasePressed()
                         }
-                        .padding(16)
+                        .padding(DSSpacing.md)
                 }
-                
+
                 Spacer(minLength: 0)
                 Spacer(minLength: 0)
             }
@@ -56,15 +57,15 @@ struct CustomPaywallView: View {
         .multilineTextAlignment(.center)
         .overlay(
             Image(systemName: "xmark.circle.fill")
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.textOnPrimary)
                 .font(.title)
-                .padding(8)
+                .padding(DSSpacing.sm)
                 .tappableBackground()
                 .anyButton(.plain, action: {
                     onBackButtonPressed()
                 })
-                .padding(16)
-            
+                .padding(DSSpacing.md)
+
             , alignment: .topLeading
         )
     }
@@ -72,7 +73,7 @@ struct CustomPaywallView: View {
     private func productRow(product: AnyProduct) -> some View {
         VStack(alignment: .leading) {
             HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: DSSpacing.xs) {
                     Text(product.title)
                         .font(.headline)
                     Text(product.priceStringWithDuration)
@@ -85,14 +86,14 @@ struct CustomPaywallView: View {
                 .font(.body)
                 .foregroundStyle(.secondary)
         }
-        .padding(16)
-        .background(Color(uiColor: .systemBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 2)
+        .padding(DSSpacing.md)
+        .background(Color.backgroundPrimary)
+        .cornerRadius(DSSpacing.md)
+        .shadow(color: Color.black.opacity(0.3), radius: DSSpacing.sm, x: 0, y: 2)
         .anyButton(.press, action: {
             onPurchaseProductPressed(product)
         })
-        .padding(16)
+        .padding(DSSpacing.md)
     }
     
 }

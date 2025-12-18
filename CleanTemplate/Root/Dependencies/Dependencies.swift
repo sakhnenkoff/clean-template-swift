@@ -338,5 +338,4 @@ class DevPreview {
             self.progressManager = ProgressManager(services: MockProgressServices(), configuration: ProgressConfiguration.mockDefault())
         }
     }
-
 }

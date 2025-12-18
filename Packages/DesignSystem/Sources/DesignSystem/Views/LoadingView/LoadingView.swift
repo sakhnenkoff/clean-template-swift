@@ -13,7 +13,7 @@ public struct LoadingView: View {
     }
 
     public var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: DSSpacing.md) {
             ProgressView()
                 .progressViewStyle(CircularProgressViewStyle())
                 .scaleEffect(style.scale)
@@ -26,9 +26,9 @@ public struct LoadingView: View {
                     .multilineTextAlignment(.center)
             }
         }
-        .padding(24)
+        .padding(DSSpacing.lg)
         .background(style.backgroundColor)
-        .cornerRadius(16)
+        .cornerRadius(DSSpacing.md)
     }
 }
 
@@ -48,15 +48,15 @@ public enum LoadingStyle {
     var backgroundColor: Color {
         switch self {
         case .default: return .backgroundSecondary
-        case .overlay: return .black.opacity(0.7)
+        case .overlay: return .overlayBackground
         case .inline: return .clear
         }
     }
 
     var tintColor: Color {
         switch self {
-        case .default, .inline: return .primary
-        case .overlay: return .white
+        case .default, .inline: return .themePrimary
+        case .overlay: return .textOnPrimary
         }
     }
 }
@@ -66,7 +66,7 @@ public extension View {
         self.overlay {
             if isLoading {
                 ZStack {
-                    Color.black.opacity(0.3)
+                    Color.overlayBackground
                         .ignoresSafeArea()
 
                     LoadingView(message: message, style: .overlay)
@@ -83,7 +83,7 @@ public extension View {
 #Preview("Overlay Loading") {
     LoadingView(message: "Please wait...", style: .overlay)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.5))
+        .background(Color.overlayBackground)
 }
 
 #Preview("Inline Loading") {

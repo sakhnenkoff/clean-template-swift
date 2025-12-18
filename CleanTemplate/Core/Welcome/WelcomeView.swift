@@ -5,6 +5,7 @@
 //  
 //
 import SwiftUI
+import DesignSystem
 
 struct WelcomeDelegate {
     var eventParameters: [String: Any]? {
@@ -13,21 +14,20 @@ struct WelcomeDelegate {
 }
 
 struct WelcomeView: View {
-    
     @State var presenter: WelcomePresenter
     let delegate: WelcomeDelegate
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: DSSpacing.sm) {
             ImageLoaderView(urlString: presenter.imageName)
                 .ignoresSafeArea()
-            
+
             titleSection
-                .padding(.top, 24)
-            
+                .padding(.top, DSSpacing.lg)
+
             ctaButtons
-                .padding(16)
-            
+                .padding(DSSpacing.md)
+
             policyLinks
         }
         .onAppear {
@@ -39,13 +39,13 @@ struct WelcomeView: View {
     }
     
     private var titleSection: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: DSSpacing.sm) {
             Text("App Name")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
-            
+
             Text("Add subtitle here")
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -55,7 +55,7 @@ struct WelcomeView: View {
     }
     
     private var ctaButtons: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: DSSpacing.sm) {
             Text("Get Started")
                 .callToActionButton()
                 .lineLimit(1)
@@ -65,11 +65,11 @@ struct WelcomeView: View {
                 })
                 .accessibilityIdentifier("StartButton")
                 .frame(maxWidth: 500)
-            
+
             Text("Already have an account? Sign in!")
                 .underline()
                 .font(.body)
-                .padding(8)
+                .padding(DSSpacing.sm)
                 .tappableBackground()
                 .onTapGesture {
                     presenter.onSignInPressed()
@@ -80,15 +80,15 @@ struct WelcomeView: View {
     }
         
     private var policyLinks: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: DSSpacing.sm) {
             Link(destination: URL(string: Constants.termsOfServiceUrlString)!) {
                 Text("Terms of Service")
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
             }
             Circle()
-                .fill(.accent)
-                .frame(width: 4, height: 4)
+                .fill(Color.themeAccent)
+                .frame(width: DSSpacing.xs, height: DSSpacing.xs)
             Link(destination: URL(string: Constants.privacyPolicyUrlString)!) {
                 Text("Privacy Policy")
                     .lineLimit(1)

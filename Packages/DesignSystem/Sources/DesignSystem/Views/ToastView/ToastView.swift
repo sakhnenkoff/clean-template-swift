@@ -41,13 +41,29 @@ public enum ToastStyle: Sendable {
     case success
     case info
 
-    public var color: Color {
+    /// Light pastel background for readability
+    public var backgroundColor: Color {
         switch self {
-        case .error: return DesignSystem.colors.error
-        case .warning: return DesignSystem.colors.warning
-        case .success: return DesignSystem.colors.success
-        case .info: return DesignSystem.colors.info
+        case .error: return .toastErrorBackground
+        case .warning: return .toastWarningBackground
+        case .success: return .toastSuccessBackground
+        case .info: return .toastInfoBackground
         }
+    }
+
+    /// Colored accent for icon and left stripe
+    public var accentColor: Color {
+        switch self {
+        case .error: return .toastErrorAccent
+        case .warning: return .toastWarningAccent
+        case .success: return .toastSuccessAccent
+        case .info: return .toastInfoAccent
+        }
+    }
+
+    /// Text color - dark in light mode, light in dark mode for contrast
+    public var foregroundColor: Color {
+        Color(light: .oxfordNavy, dark: .white)
     }
 
     public var icon: String {
@@ -70,65 +86,54 @@ public struct ToastView: View {
     }
 
     public var body: some View {
-        HStack(alignment: .center, spacing: 12) {
+        HStack(alignment: .center, spacing: DSSpacing.smd) {
             Image(systemName: toast.style.icon)
-                .foregroundColor(.white)
+                .foregroundColor(toast.style.accentColor)
                 .font(.system(size: 20))
 
             Text(toast.message)
                 .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.white)
+                .foregroundColor(toast.style.foregroundColor)
                 .multilineTextAlignment(.leading)
-
-            Spacer(minLength: 10)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
             Button(action: onDismiss) {
                 Image(systemName: "xmark")
-                    .foregroundColor(.white.opacity(0.8))
-                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(toast.style.foregroundColor.opacity(0.6))
+                    .font(.system(size: 12, weight: .semibold))
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background(toast.style.color)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, DSSpacing.md)
+        .padding(.vertical, DSSpacing.smd)
+        .background(toast.style.backgroundColor)
+        .clipShape(RoundedRectangle(cornerRadius: DSSpacing.smd))
+        .shadow(color: .black.opacity(0.15), radius: DSSpacing.sm, x: 0, y: DSSpacing.xs)
+        .padding(.horizontal, DSSpacing.md)
     }
 }
 
-#Preview("Error Toast") {
-    VStack {
-        Spacer()
-        ToastView(toast: .error("Something went wrong. Please try again.")) {
-            print("Dismissed")
-        }
+#Preview("All Toasts - Light") {
+    VStack(spacing: DSSpacing.md) {
+        ToastView(toast: .success("Your changes have been saved.")) {}
+        ToastView(toast: .error("Something went wrong. Please try again.")) {}
+        ToastView(toast: .warning("Your session will expire soon.")) {}
+        ToastView(toast: .info("New features are available!")) {}
     }
+    .padding(.vertical, DSSpacing.mlg)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color.backgroundPrimary)
+    .preferredColorScheme(.light)
 }
 
-#Preview("Success Toast") {
-    VStack {
-        Spacer()
-        ToastView(toast: .success("Your changes have been saved.")) {
-            print("Dismissed")
-        }
+#Preview("All Toasts - Dark") {
+    VStack(spacing: DSSpacing.md) {
+        ToastView(toast: .success("Your changes have been saved.")) {}
+        ToastView(toast: .error("Something went wrong. Please try again.")) {}
+        ToastView(toast: .warning("Your session will expire soon.")) {}
+        ToastView(toast: .info("New features are available!")) {}
     }
-}
-
-#Preview("Warning Toast") {
-    VStack {
-        Spacer()
-        ToastView(toast: .warning("Your session will expire soon.")) {
-            print("Dismissed")
-        }
-    }
-}
-
-#Preview("Info Toast") {
-    VStack {
-        Spacer()
-        ToastView(toast: .info("New features are available!")) {
-            print("Dismissed")
-        }
-    }
+    .padding(.vertical, DSSpacing.mlg)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color.backgroundPrimary)
+    .preferredColorScheme(.dark)
 }

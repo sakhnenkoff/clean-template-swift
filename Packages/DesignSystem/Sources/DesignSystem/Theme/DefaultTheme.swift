@@ -8,29 +8,29 @@ public struct DefaultTheme: Theme, Sendable {
 
     public init() {
         self.colors = ColorPalette(
-            // Brand
-            primary: .blue,
-            secondary: .gray,
-            accent: .accentColor,
-            // Semantic
-            success: .green,
-            warning: .orange,
-            error: .red,
-            info: .blue,
-            // Backgrounds
-            backgroundPrimary: Color(uiColor: .systemBackground),
-            backgroundSecondary: Color(uiColor: .secondarySystemBackground),
-            backgroundTertiary: Color(uiColor: .tertiarySystemBackground),
-            // Text
-            textPrimary: Color(uiColor: .label),
-            textSecondary: Color(uiColor: .secondaryLabel),
-            textTertiary: Color(uiColor: .tertiaryLabel),
-            textOnPrimary: .white,
-            // Surface
-            surface: Color(uiColor: .systemBackground),
-            surfaceVariant: Color(uiColor: .secondarySystemBackground),
-            border: Color(uiColor: .separator),
-            divider: Color(uiColor: .opaqueSeparator)
+            // Brand Colors (adaptive for dark mode)
+            primary: .adaptivePrimary,          // Yale Blue (light) / Sky Blue (dark)
+            secondary: .adaptiveSecondary,      // Oxford Navy (light) / Periwinkle (dark)
+            accent: .adaptiveAccent,            // Prussian Blue (light) / Steel Blue (dark)
+            // Semantic Colors (adaptive for dark mode)
+            success: .adaptiveSuccess,          // Sage Green (light) / Light Sage (dark)
+            warning: .adaptiveWarning,          // Goldenrod (light) / Light Gold (dark)
+            error: .adaptiveError,              // Coral Red (light) / Light Coral (dark)
+            info: .adaptiveInfo,                // Powder Blue (light) / Light Powder Blue (dark)
+            // Background Colors
+            backgroundPrimary: Color(uiColor: .systemBackground),                  // Keep system adaptive
+            backgroundSecondary: Color(uiColor: .secondarySystemBackground),       // Keep system adaptive
+            backgroundTertiary: .adaptiveTertiaryBackground,                       // Mint Cream (light) / Pale Mint (dark)
+            // Text Colors
+            textPrimary: Color(uiColor: .label),                                   // Keep system adaptive
+            textSecondary: Color(uiColor: .secondaryLabel),                        // Keep system adaptive
+            textTertiary: Color(uiColor: .tertiaryLabel),                          // Keep system adaptive
+            textOnPrimary: .white,                                                 // White for contrast on dark blues
+            // Surface Colors
+            surface: Color(uiColor: .systemBackground),                            // Keep system adaptive
+            surfaceVariant: Color(uiColor: .secondarySystemBackground),            // Keep system adaptive
+            border: Color(uiColor: .separator),                                    // Keep system adaptive
+            divider: Color(uiColor: .opaqueSeparator)                              // Keep system adaptive
         )
 
         self.typography = TypographyScale(
@@ -58,9 +58,12 @@ public struct DefaultTheme: Theme, Sendable {
         self.spacing = SpacingScale(
             xs: 4,
             sm: 8,
+            smd: 12,
             md: 16,
+            mlg: 20,
             lg: 24,
             xl: 32,
+            xxlg: 40,
             xxl: 48
         )
     }

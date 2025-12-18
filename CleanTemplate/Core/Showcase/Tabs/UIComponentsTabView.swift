@@ -36,7 +36,7 @@ struct UIComponentsTabView: View {
         Section("Semantic Colors") {
             ColorRow(name: "Background Primary", color: .backgroundPrimary)
             ColorRow(name: "Background Secondary", color: .backgroundSecondary)
-            ColorRow(name: "Accent", color: .accent)
+            ColorRow(name: "Accent", color: .themeAccent)
             ColorRow(name: "Text Primary", color: .textPrimary)
             ColorRow(name: "Text Secondary", color: .textSecondary)
         }

@@ -32,7 +32,7 @@ struct ProfileView: View {
     private var settingsButton: some View {
         Image(systemName: "gear")
             .font(.headline)
-            .foregroundStyle(.accent)
+            .foregroundStyle(Color.themeAccent)
             .anyButton {
                 presenter.onSettingsButtonPressed()
             }

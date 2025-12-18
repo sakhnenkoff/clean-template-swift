@@ -7,7 +7,6 @@
 import SwiftUI
 
 extension View {
-    
     func any() -> AnyView {
         AnyView(self)
     }
@@ -34,11 +33,10 @@ extension View {
 }
 
 extension View {
-    
     func callToActionButton(
         font: Font = .headline,
         foregroundColor: Color = .white,
-        backgroundColor: Color = .accent,
+        backgroundColor: Color = .themeAccent,
         verticalPadding: CGFloat? = 12,
         horizontalPadding: CGFloat? = nil,
         cornerRadius: CGFloat = 16
@@ -53,5 +51,4 @@ extension View {
             .background(backgroundColor)
             .cornerRadius(cornerRadius)
     }
-
 }

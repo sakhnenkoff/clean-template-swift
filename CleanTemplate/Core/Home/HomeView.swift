@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftfulUI
+import DesignSystem
 
 struct HomeDelegate {
     var eventParameters: [String: Any]? {
@@ -48,13 +49,13 @@ struct HomeView: View {
     
     private var devSettingsButton: some View {
         Text("DEV")
-            .foregroundStyle(.white)
+            .foregroundStyle(Color.textOnPrimary)
             .font(.callout)
             .bold()
-            .padding(.horizontal, 8)
-            .padding(.vertical, 6)
-            .background(Color.accent)
-            .cornerRadius(12)
+            .padding(.horizontal, DSSpacing.sm)
+            .padding(.vertical, DSSpacing.xs)
+            .background(Color.themeAccent)
+            .cornerRadius(DSSpacing.smd)
             .fixedSize(horizontal: true, vertical: false)
             .anyButton(.press) {
                 presenter.onDevSettingsPressed()

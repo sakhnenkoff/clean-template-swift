@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftfulOnboarding
+import DesignSystem
 
 struct OnboardingDelegate {
     var eventParameters: [String: Any]? {
@@ -8,7 +9,6 @@ struct OnboardingDelegate {
 }
 
 struct OnboardingView: View {
-
     @State var presenter: OnboardingPresenter
     let delegate: OnboardingDelegate
 
@@ -17,6 +17,7 @@ struct OnboardingView: View {
             configuration: OnbConfiguration(
                 headerConfiguration: OnboardingConstants.headerConfiguration,
                 slides: OnboardingConstants.slides,
+                slideDefaults: OnboardingConstants.slideDefaults,
                 onSlideComplete: { slideData in
                     presenter.onSlideComplete(slideData: slideData, delegate: delegate)
                 },
@@ -25,6 +26,7 @@ struct OnboardingView: View {
                 }
             )
         )
+        .tint(Color.themeAccent)
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             presenter.onViewAppear(delegate: delegate)
@@ -35,19 +37,7 @@ struct OnboardingView: View {
     }
 }
 
-#Preview {
-    let container = DevPreview.shared.container()
-    let interactor = CoreInteractor(container: container)
-    let builder = CoreBuilder(interactor: interactor)
-    let delegate = OnboardingDelegate()
-    
-    return RouterView { router in
-        builder.onboardingView(router: router, delegate: delegate)
-    }
-}
-
 extension CoreBuilder {
-    
     func onboardingView(router: AnyRouter, delegate: OnboardingDelegate) -> some View {
         OnboardingView(
             presenter: OnboardingPresenter(
@@ -57,15 +47,23 @@ extension CoreBuilder {
             delegate: delegate
         )
     }
-    
 }
 
 extension CoreRouter {
-    
     func showOnboardingView(delegate: OnboardingDelegate) {
         router.showScreen(.push) { router in
             builder.onboardingView(router: router, delegate: delegate)
         }
     }
-    
+}
+
+#Preview {
+    let container = DevPreview.shared.container()
+    let interactor = CoreInteractor(container: container)
+    let builder = CoreBuilder(interactor: interactor)
+    let delegate = OnboardingDelegate()
+
+    return RouterView { router in
+        builder.onboardingView(router: router, delegate: delegate)
+    }
 }

@@ -22,19 +22,19 @@ struct StorageTabView: View {
                     presenter.saveToKeychain(keychainInput)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.green)
+                .tint(Color.success)
 
                 Button("Fetch") {
                     presenter.fetchFromKeychain()
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.blue)
+                .tint(Color.link)
 
                 Button("Delete") {
                     presenter.deleteFromKeychain()
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.red)
+                .tint(Color.destructive)
             }
 
             if let value = presenter.keychainTestValue {
@@ -50,19 +50,19 @@ struct StorageTabView: View {
                     presenter.saveToUserDefaults(userDefaultsInput)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.green)
+                .tint(Color.success)
 
                 Button("Fetch") {
                     presenter.fetchFromUserDefaults()
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.blue)
+                .tint(Color.link)
 
                 Button("Delete") {
                     presenter.deleteFromUserDefaults()
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.red)
+                .tint(Color.destructive)
             }
 
             if let value = presenter.userDefaultsTestValue {

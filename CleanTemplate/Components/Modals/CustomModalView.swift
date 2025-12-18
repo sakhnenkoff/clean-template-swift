@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 struct CustomModalView: View {
-    
+
     var title: String = "Title"
     var subtitle: String? = "This is a subtitle."
     var primaryButtonTitle: String = "Yes"
@@ -17,36 +18,36 @@ struct CustomModalView: View {
     var secondaryButtonAction: () -> Void = { }
     
     var body: some View {
-        VStack(spacing: 24) {
-            VStack(spacing: 12) {
+        VStack(spacing: DSSpacing.lg) {
+            VStack(spacing: DSSpacing.smd) {
                 Text(title)
                     .font(.title3)
                     .fontWeight(.semibold)
-                
+
                 if let subtitle {
                     Text(subtitle)
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
             }
-            .padding(12)
-            
-            VStack(spacing: 8) {
+            .padding(DSSpacing.smd)
+
+            VStack(spacing: DSSpacing.sm) {
                 Text(primaryButtonTitle)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(.accent)
-                    .foregroundStyle(.white)
-                    .cornerRadius(16)
+                    .padding(.vertical, DSSpacing.smd)
+                    .background(Color.themeAccent)
+                    .foregroundStyle(Color.textOnPrimary)
+                    .cornerRadius(DSSpacing.md)
                     .anyButton(.press) {
                         primaryButtonAction()
                     }
-                
+
                 Text(secondaryButtonTitle)
                     .font(.headline)
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
+                    .padding(.vertical, DSSpacing.smd)
                     .tappableBackground()
                     .anyButton(.plain) {
                         secondaryButtonAction()
@@ -54,10 +55,10 @@ struct CustomModalView: View {
             }
         }
         .multilineTextAlignment(.center)
-        .padding(16)
-        .background(Color(uiColor: .systemBackground))
-        .cornerRadius(16)
-        .padding(40)
+        .padding(DSSpacing.md)
+        .background(Color.backgroundPrimary)
+        .cornerRadius(DSSpacing.md)
+        .padding(DSSpacing.xxlg)
     }
 }
 

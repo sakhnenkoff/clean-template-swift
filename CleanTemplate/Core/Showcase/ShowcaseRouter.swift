@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 @MainActor
 protocol ShowcaseRouter: GlobalRouter {
@@ -69,12 +70,12 @@ private struct DemoDestinationView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: DSSpacing.lg) {
             Spacer()
 
             Image(systemName: systemImage)
                 .font(.system(size: 60))
-                .foregroundStyle(.blue)
+                .foregroundStyle(Color.themePrimary)
 
             Text(title)
                 .font(.titleLarge())
@@ -88,12 +89,12 @@ private struct DemoDestinationView: View {
 
             Text("Dismiss")
                 .font(.buttonLarge())
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.textOnPrimary)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.blue)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .padding(.horizontal, 24)
+                .background(Color.themeAccent)
+                .clipShape(RoundedRectangle(cornerRadius: DSSpacing.smd))
+                .padding(.horizontal, DSSpacing.lg)
                 .anyButton(.press) {
                     dismiss()
                 }
