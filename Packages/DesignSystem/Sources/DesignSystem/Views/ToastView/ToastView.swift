@@ -41,29 +41,14 @@ public enum ToastStyle: Sendable {
     case success
     case info
 
-    /// Light pastel background for readability
+    /// Solid background color from palette
     public var backgroundColor: Color {
         switch self {
-        case .error: return .toastErrorBackground
-        case .warning: return .toastWarningBackground
-        case .success: return .toastSuccessBackground
-        case .info: return .toastInfoBackground
+        case .error: return .adaptiveError
+        case .warning: return .adaptiveWarning
+        case .success: return .adaptiveSuccess
+        case .info: return .adaptivePrimary
         }
-    }
-
-    /// Colored accent for icon and left stripe
-    public var accentColor: Color {
-        switch self {
-        case .error: return .toastErrorAccent
-        case .warning: return .toastWarningAccent
-        case .success: return .toastSuccessAccent
-        case .info: return .toastInfoAccent
-        }
-    }
-
-    /// Text color - dark in light mode, light in dark mode for contrast
-    public var foregroundColor: Color {
-        Color(light: .oxfordNavy, dark: .white)
     }
 
     public var icon: String {
@@ -88,26 +73,27 @@ public struct ToastView: View {
     public var body: some View {
         HStack(alignment: .center, spacing: DSSpacing.smd) {
             Image(systemName: toast.style.icon)
-                .foregroundColor(toast.style.accentColor)
-                .font(.system(size: 20))
+                .foregroundStyle(.white)
+                .font(.system(size: 20, weight: .semibold))
 
             Text(toast.message)
                 .font(.system(size: 14, weight: .medium))
-                .foregroundColor(toast.style.foregroundColor)
+                .foregroundStyle(.white)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             Button(action: onDismiss) {
                 Image(systemName: "xmark")
-                    .foregroundColor(toast.style.foregroundColor.opacity(0.6))
-                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.8))
+                    .font(.system(size: 12, weight: .bold))
             }
         }
         .padding(.horizontal, DSSpacing.md)
         .padding(.vertical, DSSpacing.smd)
         .background(toast.style.backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: DSSpacing.smd))
-        .shadow(color: .black.opacity(0.15), radius: DSSpacing.sm, x: 0, y: DSSpacing.xs)
+        .shadow(color: .black.opacity(0.1), radius: 1, x: 0, y: 1)
+        .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
         .padding(.horizontal, DSSpacing.md)
     }
 }

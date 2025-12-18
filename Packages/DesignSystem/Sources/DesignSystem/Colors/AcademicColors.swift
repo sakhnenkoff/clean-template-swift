@@ -59,32 +59,6 @@ public extension Color {
     /// Light Coral - Vibrant error color for dark mode
     static let lightCoral = Color(hex: "FF6B6B")
 
-    // MARK: - Toast Background Colors (Light, pastel backgrounds for readability)
-
-    /// Pale Green - Light success toast background
-    static let paleGreen = Color(hex: "E8F5E9")
-
-    /// Pale Amber - Light warning toast background
-    static let paleAmber = Color(hex: "FFF8E1")
-
-    /// Pale Red - Light error toast background
-    static let paleRed = Color(hex: "FFEBEE")
-
-    /// Pale Blue - Light info toast background
-    static let paleBlue = Color(hex: "E3F2FD")
-
-    /// Dark Green - Success toast background for dark mode
-    static let darkGreen = Color(hex: "1B5E20")
-
-    /// Dark Amber - Warning toast background for dark mode
-    static let darkAmber = Color(hex: "F57F17")
-
-    /// Dark Red - Error toast background for dark mode
-    static let darkRed = Color(hex: "B71C1C")
-
-    /// Dark Blue - Info toast background for dark mode
-    static let darkBlue = Color(hex: "0D47A1")
-
     // MARK: - Adaptive Colors (Auto-switch based on color scheme)
 
     /// Adaptive primary color - Yale Blue (light) / Sky Blue (dark)
@@ -125,50 +99,6 @@ public extension Color {
     /// Adaptive tertiary background - Mint Cream (light) / Pale Mint (dark)
     public static var adaptiveTertiaryBackground: Color {
         Color(light: .mintCream, dark: .paleMint)
-    }
-
-    // MARK: - Adaptive Toast Background Colors
-
-    /// Success toast background - Pale Green (light) / Dark Green (dark)
-    public static var toastSuccessBackground: Color {
-        Color(light: .paleGreen, dark: .darkGreen)
-    }
-
-    /// Warning toast background - Pale Amber (light) / Dark Amber (dark)
-    public static var toastWarningBackground: Color {
-        Color(light: .paleAmber, dark: .darkAmber)
-    }
-
-    /// Error toast background - Pale Red (light) / Dark Red (dark)
-    public static var toastErrorBackground: Color {
-        Color(light: .paleRed, dark: .darkRed)
-    }
-
-    /// Info toast background - Pale Blue (light) / Dark Blue (dark)
-    public static var toastInfoBackground: Color {
-        Color(light: .paleBlue, dark: .darkBlue)
-    }
-
-    // MARK: - Toast Accent Colors (Icons and emphasis)
-
-    /// Success accent - Sage Green (light) / Light Sage (dark)
-    public static var toastSuccessAccent: Color {
-        Color(light: .sageGreen, dark: .lightSage)
-    }
-
-    /// Warning accent - Goldenrod (light) / Light Gold (dark)
-    public static var toastWarningAccent: Color {
-        Color(light: .goldenrod, dark: .lightGold)
-    }
-
-    /// Error accent - Coral Red (light) / Light Coral (dark)
-    public static var toastErrorAccent: Color {
-        Color(light: .coralRed, dark: .lightCoral)
-    }
-
-    /// Info accent - Yale Blue (light) / Sky Blue (dark)
-    public static var toastInfoAccent: Color {
-        Color(light: .yaleBlue, dark: .skyBlue)
     }
 }
 

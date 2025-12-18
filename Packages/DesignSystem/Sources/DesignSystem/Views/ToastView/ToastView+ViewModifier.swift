@@ -18,13 +18,13 @@ struct ToastViewModifier: ViewModifier {
                         dismissToast()
                     }
                     .transition(.asymmetric(
-                        insertion: .move(edge: .bottom).combined(with: .opacity),
-                        removal: .opacity
+                        insertion: .scale(scale: 0.92).combined(with: .move(edge: .bottom)).combined(with: .opacity),
+                        removal: .scale(scale: 0.92).combined(with: .opacity)
                     ))
                     .padding(.bottom, 50)
                 }
             }
-            .animation(.easeOut(duration: 0.25), value: toast)
+            .animation(.spring(response: 0.4, dampingFraction: 0.75), value: toast)
             .onChange(of: toast) { _, newToast in
                 if let newToast = newToast {
                     scheduleAutoDismiss(duration: newToast.duration)
