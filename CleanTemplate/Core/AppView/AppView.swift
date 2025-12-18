@@ -102,41 +102,20 @@ extension CoreBuilder {
             TabBarTab(title: "Home", systemImage: "house.fill", destination: { router in
                 homeView(router: router, delegate: HomeDelegate())
             }),
-            TabBarTab(title: "Beta", systemImage: "heart.fill", destination: { router in
-                sampleGamificationViewForMock(router: router)
+            TabBarTab(title: "Showcase", systemImage: "sparkles", destination: { router in
+                showcaseView(router: router, delegate: ShowcaseDelegate())
             }),
             TabBarTab(title: "Profile", systemImage: "person.fill", destination: { router in
                 profileView(router: router, delegate: ProfileDelegate())
             })
         ]
-        
+
         return tabBarView(
             delegate: TabBarDelegate(
                 tabs: tabs,
                 startingTabId: tabs.first?.id
             )
         )
-    }
-    
-    private func sampleGamificationViewForMock(router: AnyRouter) -> some View {
-        List {
-            Button("Streaks") {
-                router.showScreen { router in
-                    streakExampleView(router: router, delegate: StreakExampleDelegate())
-                }
-            }
-            Button("Experience Points") {
-                router.showScreen { router in
-                    experiencePointsExampleView(router: router, delegate: ExperiencePointsExampleDelegate())
-                }
-            }
-            Button("Progress") {
-                router.showScreen { router in
-                    progressExampleView(router: router, delegate: ProgressExampleDelegate())
-                }
-            }
-        }
-        .navigationTitle("Gamification Examples")
     }
 }
 
