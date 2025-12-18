@@ -8,7 +8,11 @@ file_length:
 disabled_rules:
   - trailing_whitespace
 
+opt_in_rules:
+  - force_unwrapping
+
 excluded:
   - .git
   - Pods
   - Carthage
+  - Packages
