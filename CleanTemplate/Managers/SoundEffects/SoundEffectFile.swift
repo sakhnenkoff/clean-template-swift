@@ -11,16 +11,18 @@ import Foundation
 
 enum SoundEffectFile: String, Equatable {
     case sample
-    
+
     var fileName: String {
         switch self {
         case .sample:
             return "Sample.wav"
         }
     }
-    
-    var url: URL {
-        let path = Bundle.main.path(forResource: fileName, ofType: nil)!
+
+    var url: URL? {
+        guard let path = Bundle.main.path(forResource: fileName, ofType: nil) else {
+            return nil
+        }
         return URL(fileURLWithPath: path)
     }
 }
