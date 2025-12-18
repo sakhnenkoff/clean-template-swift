@@ -7,13 +7,17 @@
 import SwiftUI
 import Firebase
 import FirebaseMessaging
+import DesignSystem
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     var dependencies: Dependencies!
     var builder: Builder!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        
+
+        // Configure DesignSystem FIRST, before any UI is created
+        DesignSystem.configureWithDefaults()
+
         var config: BuildConfiguration
         
         #if DEBUG

@@ -8,7 +8,6 @@ import SwiftUI
 import SwiftfulUI
 
 struct AppView<Content: View>: View {
-
     @State var presenter: AppPresenter
     @ViewBuilder var content: () -> Content
 
@@ -120,17 +119,14 @@ extension CoreBuilder {
 }
 
 extension CoreRouter {
-    
     func switchToCoreModule() {
         router.showModule(.trailing, id: Constants.tabbarModuleId, onDismiss: nil) { _ in
             self.builder.coreModuleEntryView()
         }
     }
-    
 }
 
 extension CoreRouter {
-    
     func switchToOnboardingModule() {
         router.showModule(.trailing, id: Constants.onboardingModuleId, onDismiss: nil) { _ in
             self.builder.onboardingModuleEntryView()

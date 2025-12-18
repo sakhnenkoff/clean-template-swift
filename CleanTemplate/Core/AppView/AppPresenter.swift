@@ -13,7 +13,6 @@ import FirebaseMessaging
 @Observable
 @MainActor
 class AppPresenter {
-    
     private let interactor: AppViewInteractor
     
     var auth: UserAuthInfo? {
@@ -106,7 +105,6 @@ class AppPresenter {
 }
 
 extension AppPresenter {
-
     enum Event: LoggableEvent {
         case onAppear
         case onDisappear
