@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HighlightButtonStyle: ButtonStyle {
-    
-    func makeBody(configuration: Configuration) -> some View {
+
+    func makeBody(configuration: ButtonStyleConfiguration) -> some View {
         configuration.label
             .overlay {
                 configuration.isPressed ? Color.accent.opacity(0.4) : Color.accent.opacity(0)
@@ -19,8 +19,8 @@ struct HighlightButtonStyle: ButtonStyle {
 }
 
 struct PressableButtonStyle: ButtonStyle {
-    
-    func makeBody(configuration: Configuration) -> some View {
+
+    func makeBody(configuration: ButtonStyleConfiguration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.95 : 1)
             .animation(.smooth, value: configuration.isPressed)

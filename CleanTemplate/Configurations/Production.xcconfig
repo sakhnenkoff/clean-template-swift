@@ -1,0 +1,10 @@
+// Production.xcconfig
+// Configuration for Production builds
+
+#include "Base.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.organization.CleanTemplate
+INFOPLIST_KEY_CFBundleDisplayName = CleanTemplate
+API_BASE_URL = https://api.example.com
+API_KEY = your-prod-api-key
+ENVIRONMENT = prod

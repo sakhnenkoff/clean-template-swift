@@ -1,0 +1,11 @@
+// Development.xcconfig
+// Configuration for Development builds
+
+#include "Base.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.organization.CleanTemplate.dev
+OTHER_SWIFT_FLAGS = $(inherited) -DDEV
+INFOPLIST_KEY_CFBundleDisplayName = CleanTemplate - Dev
+API_BASE_URL = https://dev-api.example.com
+API_KEY = your-dev-api-key
+ENVIRONMENT = dev

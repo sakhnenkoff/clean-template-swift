@@ -204,10 +204,110 @@ CleanTemplate/
 │
 ├── CleanTemplateUnitTests/  # Unit tests
 ├── CleanTemplateUITests/    # UI tests
+├── Packages/                # Local Swift Packages
+│   ├── Domain/              # Entities and repository protocols
+│   ├── Data/                # Repository implementations
+│   ├── Networking/          # API request/response handling
+│   ├── LocalPersistance/    # Keychain and UserDefaults caching
+│   └── DesignSystem/        # UI components, colors, typography
 ├── README.md                         # Project documentation
 ├── .swiftlint.yml                    # SwiftLint configuration
 ├── .gitignore
 └── rename_project.sh                 # Script to rename project
+```
+
+---
+
+## Local Swift Packages
+
+The template includes 5 local Swift packages in the `/Packages/` directory for modular architecture:
+
+### Package Overview
+
+| Package | Purpose | Key Types |
+|---------|---------|-----------|
+| **Domain** | Entities and repository protocols | Entity models, repository protocols |
+| **Data** | Repository implementations | DataMock for testing |
+| **Networking** | API request/response handling | `NetworkingService`, `APIRequest`, `APIError` |
+| **LocalPersistance** | Keychain and UserDefaults caching | `KeychainCacheService`, `UserDefaultsCacheService` |
+| **DesignSystem** | UI components, colors, typography | `ToastView`, `LoadingView`, Color/Font extensions |
+
+### Package Structure
+
+```
+Packages/
+├── Domain/
+│   ├── Sources/
+│   │   ├── Domain/           # Entities, repository protocols
+│   │   └── DomainMock/       # Mock implementations for testing
+│   └── Tests/
+├── Data/
+│   ├── Sources/
+│   │   ├── Data/             # Repository implementations
+│   │   └── DataMock/         # Mock implementations
+│   └── Tests/
+├── Networking/
+│   └── Sources/Networking/
+│       └── Service/
+│           ├── APIRequest/   # GET, POST, PUT, DELETE request types
+│           ├── APIError/     # Error handling
+│           ├── Authorization/ # Auth headers
+│           └── NetworkingService/ # Main service
+├── LocalPersistance/
+│   ├── Sources/
+│   │   ├── LocalPersistance/
+│   │   │   ├── KeychainCacheService/  # Secure storage
+│   │   │   └── UserDefaultsCacheService/ # App preferences
+│   │   └── LocalPersistanceMock/
+│   └── Tests/
+└── DesignSystem/
+    └── Sources/DesignSystem/
+        ├── Colors/           # Color+Extensions.swift
+        ├── Typography/       # Font+DesignSystem.swift
+        └── Views/
+            ├── ToastView/    # Toast notification system
+            └── LoadingView/  # Loading indicators
+```
+
+### Using Local Packages
+
+**Import in Swift files:**
+```swift
+import Domain
+import Data
+import Networking
+import LocalPersistance
+import DesignSystem
+```
+
+**Access via Interactor (recommended for services):**
+```swift
+// Keychain operations
+interactor.saveToKeychain("token", for: "auth_token")
+let token = interactor.fetchStringFromKeychain(for: "auth_token")
+
+// UserDefaults operations
+try interactor.saveToUserDefaults(settings, for: "user_settings")
+let settings: Settings? = try interactor.fetchFromUserDefaults(for: "user_settings")
+
+// Network requests
+let user: User = try await interactor.sendRequest(urlRequest)
+```
+
+**Use DesignSystem components directly in Views:**
+```swift
+import DesignSystem
+
+struct MyView: View {
+    @State private var toast: Toast?
+    @State private var isLoading = false
+
+    var body: some View {
+        ContentView()
+            .toast($toast)
+            .loading(isLoading)
+    }
+}
 ```
 
 ---

@@ -1044,4 +1044,166 @@ Screen Interactor/Router/Presenter (use CoreInteractor)
 8. **Screen builders in extensions** - AppView, each screen view extends CoreBuilder
 9. **Retroactive protocol conformance** - LogManager implements all *Logger protocols
 10. **Key-based manager registration** - Some managers (streaks, xp, progress) use keys
+11. **Local SPM packages** - Domain, Data, Networking, LocalPersistance, DesignSystem for modular architecture
+
+---
+
+## LOCAL PACKAGES
+
+In addition to SwiftfulThinking packages, this project includes 5 local Swift packages for modular architecture.
+
+### 11. LOCALPERSISTANCE (Local Package)
+
+**Purpose:** Secure storage via Keychain and UserDefaults with protocol-based abstractions.
+
+**Location:** `/Packages/LocalPersistance/`
+
+**Key Types:**
+- `KeychainCacheServiceProtocol` / `KeychainCacheService`
+- `UserDefaultsCacheServiceProtocol` / `UserDefaultsCacheService`
+- `MockKeychainCacheService` / `MockUserDefaultsCacheService`
+
+**Registration in Dependencies.swift:**
+```swift
+import LocalPersistance
+import LocalPersistanceMock
+
+// Mock configuration
+keychainService = MockKeychainCacheService()
+userDefaultsService = MockUserDefaultsCacheService()
+
+// Production configuration
+keychainService = KeychainCacheService()
+userDefaultsService = UserDefaultsCacheService()
+
+// Registration
+container.register(KeychainCacheServiceProtocol.self, service: keychainService)
+container.register(UserDefaultsCacheServiceProtocol.self, service: userDefaultsService)
+```
+
+**Usage via CoreInteractor:**
+```swift
+// Keychain - save string
+interactor.saveToKeychain("auth_token_value", for: "auth_token")
+
+// Keychain - fetch string
+let token = interactor.fetchStringFromKeychain(for: "auth_token")
+
+// Keychain - save/fetch Codable objects
+try interactor.saveToKeychain(user, for: "current_user")
+let user: User? = try interactor.fetchFromKeychain(for: "current_user")
+
+// UserDefaults - save/fetch Codable objects
+try interactor.saveToUserDefaults(settings, for: "app_settings")
+let settings: AppSettings? = try interactor.fetchFromUserDefaults(for: "app_settings")
+
+// Remove
+interactor.removeFromKeychain(for: "auth_token")
+interactor.removeFromUserDefaults(for: "app_settings")
+```
+
+### 12. NETWORKING (Local Package)
+
+**Purpose:** Type-safe API request handling with proper error management.
+
+**Location:** `/Packages/Networking/`
+
+**Key Types:**
+- `NetworkingServiceProtocol` / `NetworkingService`
+- `APIRequest` protocol with GET, POST, PUT, DELETE variants
+- `APIError` enum for error handling
+- `Authorization` for auth headers
+
+**Registration in Dependencies.swift:**
+```swift
+import Networking
+
+networkingService = NetworkingService()
+container.register(NetworkingServiceProtocol.self, service: networkingService)
+```
+
+**Usage via CoreInteractor:**
+```swift
+// Create URLRequest and send
+let request = URLRequest(url: url)
+let user: User = try await interactor.sendRequest(request)
+
+// Fire-and-forget request
+try await interactor.sendRequest(request)
+```
+
+**Creating API Requests (in Networking package):**
+```swift
+struct FetchUserRequest: GetAPIRequest {
+    typealias ResponseType = User
+    var endpoint: String { "/users/\(userId)" }
+    let userId: String
+}
+
+let request = FetchUserRequest(userId: "123")
+guard let urlRequest = request.generateURLRequest(baseURL: Configuration.apiBaseURL) else { return }
+let user: User = try await networkingService.send(urlRequest)
+```
+
+### 13. DESIGNSYSTEM (Local Package)
+
+**Purpose:** Shared UI components, colors, and typography.
+
+**Location:** `/Packages/DesignSystem/`
+
+**Key Components:**
+- `ToastView` + `.toast()` modifier - Notification banners
+- `LoadingView` + `.loading()` modifier - Loading indicators
+- `Color` extensions - Semantic colors, hex initializer
+- `Font` extensions - Typography styles
+
+**Usage in Views:**
+```swift
+import DesignSystem
+
+struct MyView: View {
+    @State private var toast: Toast?
+    @State private var isLoading = false
+
+    var body: some View {
+        ContentView()
+            .toast($toast)
+            .loading(isLoading, message: "Loading...")
+    }
+}
+
+// Create toasts
+toast = .success("Saved!")
+toast = .error("Failed to save")
+toast = .warning("Connection unstable")
+toast = .info("New features available")
+```
+
+See `design-system-usage.md` for comprehensive usage examples.
+
+### 14. DOMAIN (Local Package)
+
+**Purpose:** Core entities and repository protocols (Clean Architecture domain layer).
+
+**Location:** `/Packages/Domain/`
+
+**Structure:**
+- `Sources/Domain/` - Entity definitions, repository protocols
+- `Sources/DomainMock/` - Mock implementations for testing
+
+**Usage:** Define shared entities and repository interfaces here.
+
+### 15. DATA (Local Package)
+
+**Purpose:** Repository implementations and data layer logic.
+
+**Location:** `/Packages/Data/`
+
+**Dependencies:** Domain, Networking
+
+**Structure:**
+- `Sources/Data/` - Repository implementations
+- `Sources/DataMock/` - Mock implementations for testing
+
+**Usage:** Implement repository protocols defined in Domain package
 

@@ -1,4 +1,6 @@
 import SwiftUI
+import LocalPersistance
+import Networking
 
 @MainActor
 struct CoreInteractor: GlobalInteractor {
@@ -14,6 +16,9 @@ struct CoreInteractor: GlobalInteractor {
     private let streakManager: StreakManager
     private let xpManager: ExperiencePointsManager
     private let progressManager: ProgressManager
+    private let keychainService: KeychainCacheServiceProtocol
+    private let userDefaultsService: UserDefaultsCacheServiceProtocol
+    private let networkingService: NetworkingServiceProtocol
 
     init(container: DependencyContainer) {
         self.appState = container.resolve(AppState.self)!
@@ -28,6 +33,9 @@ struct CoreInteractor: GlobalInteractor {
         self.streakManager = container.resolve(StreakManager.self, key: Dependencies.streakConfiguration.streakKey)!
         self.xpManager = container.resolve(ExperiencePointsManager.self, key: Dependencies.xpConfiguration.experienceKey)!
         self.progressManager = container.resolve(ProgressManager.self, key: Dependencies.progressConfiguration.progressKey)!
+        self.keychainService = container.resolve(KeychainCacheServiceProtocol.self)!
+        self.userDefaultsService = container.resolve(UserDefaultsCacheServiceProtocol.self)!
+        self.networkingService = container.resolve(NetworkingServiceProtocol.self)!
     }
     
     // MARK: APP STATE
@@ -317,6 +325,73 @@ struct CoreInteractor: GlobalInteractor {
 
     func deleteAllProgress() async throws {
         try await progressManager.deleteAllProgress()
+    }
+
+    // MARK: KeychainService
+
+    @discardableResult
+    func saveToKeychain(_ string: String, for key: String) -> Bool {
+        keychainService.save(string, for: key)
+    }
+
+    @discardableResult
+    func saveToKeychain(_ data: Data, for key: String) -> Bool {
+        keychainService.save(data, for: key)
+    }
+
+    @discardableResult
+    func saveToKeychain<T: Encodable>(_ object: T, for key: String) throws -> Bool {
+        try keychainService.save(object, for: key)
+    }
+
+    func fetchStringFromKeychain(for key: String) -> String? {
+        keychainService.fetchString(for: key)
+    }
+
+    func fetchDataFromKeychain(for key: String) -> Data? {
+        keychainService.fetchData(for: key)
+    }
+
+    func fetchFromKeychain<T: Decodable>(for key: String) throws -> T? {
+        try keychainService.fetch(for: key)
+    }
+
+    @discardableResult
+    func removeFromKeychain(for key: String) -> Bool {
+        keychainService.remove(for: key)
+    }
+
+    @discardableResult
+    func removeAllFromKeychain() -> Bool {
+        keychainService.removeAll()
+    }
+
+    // MARK: UserDefaultsService
+
+    func saveToUserDefaults<T: Encodable>(_ object: T, for key: String) throws {
+        try userDefaultsService.save(object, for: key)
+    }
+
+    func fetchFromUserDefaults<T: Decodable>(for key: String) throws -> T? {
+        try userDefaultsService.fetch(for: key)
+    }
+
+    func removeFromUserDefaults(for key: String) {
+        userDefaultsService.remove(for: key)
+    }
+
+    func removeAllFromUserDefaults(forDomain domain: String) {
+        userDefaultsService.removeAll(forDomain: domain)
+    }
+
+    // MARK: NetworkingService
+
+    func sendRequest<T: Decodable & Sendable>(_ request: URLRequest) async throws -> T {
+        try await networkingService.send(request)
+    }
+
+    func sendRequest(_ request: URLRequest) async throws {
+        try await networkingService.send(request)
     }
 
     // MARK: SHARED

@@ -6,6 +6,9 @@
 //
 import SwiftUI
 import SwiftfulRouting
+import LocalPersistance
+import LocalPersistanceMock
+import Networking
 
 @MainActor
 struct Dependencies {
@@ -25,7 +28,10 @@ struct Dependencies {
         let streakManager: StreakManager
         let xpManager: ExperiencePointsManager
         let progressManager: ProgressManager
-        
+        let keychainService: KeychainCacheServiceProtocol
+        let userDefaultsService: UserDefaultsCacheServiceProtocol
+        let networkingService: NetworkingServiceProtocol
+
         switch config {
         case .mock(isSignedIn: let isSignedIn):
             logManager = LogManager(services: [
@@ -48,6 +54,9 @@ struct Dependencies {
             streakManager = StreakManager(services: MockStreakServices(), configuration: Dependencies.streakConfiguration, logger: logManager)
             xpManager = ExperiencePointsManager(services: MockExperiencePointsServices(), configuration: Dependencies.xpConfiguration, logger: logManager)
             progressManager = ProgressManager(services: MockProgressServices(), configuration: Dependencies.progressConfiguration, logger: logManager)
+            keychainService = MockKeychainCacheService()
+            userDefaultsService = MockUserDefaultsCacheService()
+            networkingService = NetworkingService()
         case .dev:
             logManager = LogManager(services: [
                 ConsoleService(printParameters: true),
@@ -67,6 +76,9 @@ struct Dependencies {
             streakManager = StreakManager(services: ProdStreakServices(), configuration: Dependencies.streakConfiguration, logger: logManager)
             xpManager = ExperiencePointsManager(services: ProdExperiencePointsServices(), configuration: Dependencies.xpConfiguration, logger: logManager)
             progressManager = ProgressManager(services: ProdProgressServices(), configuration: Dependencies.progressConfiguration, logger: logManager)
+            keychainService = KeychainCacheService()
+            userDefaultsService = UserDefaultsCacheService()
+            networkingService = NetworkingService()
         case .prod:
             logManager = LogManager(services: [
                 FirebaseAnalyticsService(),
@@ -86,6 +98,9 @@ struct Dependencies {
             streakManager = StreakManager(services: ProdStreakServices(), configuration: Dependencies.streakConfiguration, logger: logManager)
             xpManager = ExperiencePointsManager(services: ProdExperiencePointsServices(), configuration: Dependencies.xpConfiguration, logger: logManager)
             progressManager = ProgressManager(services: ProdProgressServices(), configuration: Dependencies.progressConfiguration, logger: logManager)
+            keychainService = KeychainCacheService()
+            userDefaultsService = UserDefaultsCacheService()
+            networkingService = NetworkingService()
         }
         pushManager = PushManager(logManager: logManager)
         soundEffectManager = SoundEffectManager(logger: logManager)
@@ -103,6 +118,9 @@ struct Dependencies {
         container.register(StreakManager.self, key: Dependencies.streakConfiguration.streakKey, service: streakManager)
         container.register(ExperiencePointsManager.self, key: Dependencies.xpConfiguration.experienceKey, service: xpManager)
         container.register(ProgressManager.self, key: Dependencies.progressConfiguration.progressKey, service: progressManager)
+        container.register(KeychainCacheServiceProtocol.self, service: keychainService)
+        container.register(UserDefaultsCacheServiceProtocol.self, service: userDefaultsService)
+        container.register(NetworkingServiceProtocol.self, service: networkingService)
 
         self.container = container
         
@@ -151,9 +169,12 @@ class DevPreview {
         container.register(StreakManager.self, key: Dependencies.streakConfiguration.streakKey, service: streakManager)
         container.register(ExperiencePointsManager.self, key: Dependencies.xpConfiguration.experienceKey, service: xpManager)
         container.register(ProgressManager.self, key: Dependencies.progressConfiguration.progressKey, service: progressManager)
+        container.register(KeychainCacheServiceProtocol.self, service: keychainService)
+        container.register(UserDefaultsCacheServiceProtocol.self, service: userDefaultsService)
+        container.register(NetworkingServiceProtocol.self, service: networkingService)
         return container
     }
-    
+
     let authManager: AuthManager
     let userManager: UserManager
     let logManager: LogManager
@@ -166,6 +187,9 @@ class DevPreview {
     let streakManager: StreakManager
     let xpManager: ExperiencePointsManager
     let progressManager: ProgressManager
+    let keychainService: KeychainCacheServiceProtocol
+    let userDefaultsService: UserDefaultsCacheServiceProtocol
+    let networkingService: NetworkingServiceProtocol
 
     init(isSignedIn: Bool = true) {
         self.authManager = AuthManager(service: MockAuthService(user: isSignedIn ? .mock() : nil))
@@ -180,6 +204,9 @@ class DevPreview {
         self.streakManager = StreakManager(services: MockStreakServices(), configuration: StreakConfiguration.mockDefault())
         self.xpManager = ExperiencePointsManager(services: MockExperiencePointsServices(), configuration: ExperiencePointsConfiguration.mockDefault())
         self.progressManager = ProgressManager(services: MockProgressServices(), configuration: ProgressConfiguration.mockDefault())
+        self.keychainService = MockKeychainCacheService()
+        self.userDefaultsService = MockUserDefaultsCacheService()
+        self.networkingService = NetworkingService()
     }
 
 }
