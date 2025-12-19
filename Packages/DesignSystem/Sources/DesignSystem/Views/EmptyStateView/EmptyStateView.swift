@@ -106,25 +106,31 @@ public extension EmptyStateView {
         query: String? = nil,
         onClearSearch: (() -> Void)? = nil
     ) -> EmptyStateView {
-        EmptyStateView(
+        let message: String
+        if let query {
+            message = String(localized: "No results for \"\(query)\"", bundle: .module)
+        } else {
+            message = String(localized: "Try a different search term", bundle: .module)
+        }
+        return EmptyStateView(
             icon: "magnifyingglass",
-            title: "No Results Found",
-            message: query.map { "No results for \"\($0)\"" } ?? "Try a different search term",
-            actionTitle: onClearSearch != nil ? "Clear Search" : nil,
+            title: String(localized: "No Results Found", bundle: .module),
+            message: message,
+            actionTitle: onClearSearch != nil ? String(localized: "Clear Search", bundle: .module) : nil,
             action: onClearSearch
         )
     }
 
     /// Creates an empty state for an empty list.
     static func emptyList(
-        title: String = "Nothing Here Yet",
+        title: String? = nil,
         message: String? = nil,
         actionTitle: String? = nil,
         action: (() -> Void)? = nil
     ) -> EmptyStateView {
         EmptyStateView(
             icon: "tray",
-            title: title,
+            title: title ?? String(localized: "Nothing Here Yet", bundle: .module),
             message: message,
             actionTitle: actionTitle,
             action: action
@@ -137,9 +143,9 @@ public extension EmptyStateView {
     ) -> EmptyStateView {
         EmptyStateView(
             icon: "heart",
-            title: "No Favorites",
-            message: "Items you favorite will appear here",
-            actionTitle: onBrowse != nil ? "Browse Items" : nil,
+            title: String(localized: "No Favorites", bundle: .module),
+            message: String(localized: "Items you favorite will appear here", bundle: .module),
+            actionTitle: onBrowse != nil ? String(localized: "Browse Items", bundle: .module) : nil,
             action: onBrowse
         )
     }
@@ -148,8 +154,8 @@ public extension EmptyStateView {
     static func noNotifications() -> EmptyStateView {
         EmptyStateView(
             icon: "bell",
-            title: "No Notifications",
-            message: "You're all caught up!"
+            title: String(localized: "No Notifications", bundle: .module),
+            message: String(localized: "You're all caught up!", bundle: .module)
         )
     }
 }

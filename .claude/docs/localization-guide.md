@@ -230,11 +230,56 @@ func showDeleteConfirmation() {
 
 ---
 
-## File Location
+## File Locations
 
-- **String Catalog**: `CleanTemplate/Localizable.xcstrings`
-- Auto-synced by Xcode on every build
-- Committed to source control
+| Location | Purpose |
+|----------|---------|
+| `CleanTemplate/Localizable.xcstrings` | Main app strings |
+| `Packages/DesignSystem/.../Resources/Localizable.xcstrings` | DesignSystem package strings |
+
+Both are auto-synced by Xcode on every build and committed to source control.
+
+---
+
+## Package Localization (DesignSystem)
+
+The DesignSystem package has its own String Catalog for component strings (error messages, empty states, buttons).
+
+### How It Works
+
+Package code uses `bundle: .module` to reference its own String Catalog:
+
+```swift
+// In DesignSystem package code
+String(localized: "Try Again", bundle: .module)
+String(localized: "No Results Found", bundle: .module)
+```
+
+### Localized Components
+
+These components have built-in localized strings:
+
+- **ErrorStateView** - "Something Went Wrong", "Try Again", "Connection Problem", etc.
+- **EmptyStateView** - "No Results Found", "No Favorites", "Nothing Here Yet", etc.
+
+### Adding Package Strings
+
+1. Add string with `String(localized: "key", bundle: .module)` in package code
+2. Build the project
+3. Open `Packages/DesignSystem/.../Resources/Localizable.xcstrings`
+4. Add translations
+
+### Package.swift Configuration
+
+The DesignSystem package is configured to include resources:
+
+```swift
+.target(
+    name: "DesignSystem",
+    dependencies: [],
+    resources: [.process("Resources")]
+)
+```
 
 ---
 

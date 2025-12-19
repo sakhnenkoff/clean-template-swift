@@ -13,17 +13,17 @@ public struct ErrorStateView: View {
 
     public init(
         icon: String = "exclamationmark.triangle.fill",
-        title: String = "Something Went Wrong",
+        title: String? = nil,
         message: String? = nil,
-        retryTitle: String? = "Try Again",
+        retryTitle: String? = nil,
         onRetry: (() -> Void)? = nil,
         dismissTitle: String? = nil,
         onDismiss: (() -> Void)? = nil
     ) {
         self.icon = icon
-        self.title = title
+        self.title = title ?? String(localized: "Something Went Wrong", bundle: .module)
         self.message = message
-        self.retryTitle = retryTitle
+        self.retryTitle = retryTitle ?? String(localized: "Try Again", bundle: .module)
         self.onRetry = onRetry
         self.dismissTitle = dismissTitle
         self.onDismiss = onDismiss
@@ -32,15 +32,15 @@ public struct ErrorStateView: View {
     /// Creates an ErrorStateView from an Error object.
     public init(
         error: Error,
-        retryTitle: String? = "Try Again",
+        retryTitle: String? = nil,
         onRetry: (() -> Void)? = nil,
         dismissTitle: String? = nil,
         onDismiss: (() -> Void)? = nil
     ) {
         self.icon = "exclamationmark.triangle.fill"
-        self.title = "Something Went Wrong"
+        self.title = String(localized: "Something Went Wrong", bundle: .module)
         self.message = error.localizedDescription
-        self.retryTitle = retryTitle
+        self.retryTitle = retryTitle ?? String(localized: "Try Again", bundle: .module)
         self.onRetry = onRetry
         self.dismissTitle = dismissTitle
         self.onDismiss = onDismiss
@@ -106,7 +106,7 @@ public extension View {
     @ViewBuilder
     func errorState(
         _ error: Error?,
-        retryTitle: String = "Try Again",
+        retryTitle: String? = nil,
         onRetry: @escaping () -> Void
     ) -> some View {
         if let error {
@@ -124,8 +124,8 @@ public extension View {
     @ViewBuilder
     func errorState(
         _ error: Error?,
-        title: String = "Something Went Wrong",
-        retryTitle: String = "Try Again",
+        title: String? = nil,
+        retryTitle: String? = nil,
         onRetry: @escaping () -> Void,
         dismissTitle: String? = nil,
         onDismiss: (() -> Void)? = nil
@@ -154,9 +154,9 @@ public extension ErrorStateView {
     ) -> ErrorStateView {
         ErrorStateView(
             icon: "wifi.exclamationmark",
-            title: "Connection Problem",
-            message: "Please check your internet connection and try again.",
-            retryTitle: "Try Again",
+            title: String(localized: "Connection Problem", bundle: .module),
+            message: String(localized: "Please check your internet connection and try again.", bundle: .module),
+            retryTitle: String(localized: "Try Again", bundle: .module),
             onRetry: onRetry
         )
     }
@@ -167,9 +167,9 @@ public extension ErrorStateView {
     ) -> ErrorStateView {
         ErrorStateView(
             icon: "server.rack",
-            title: "Server Error",
-            message: "We're having trouble connecting to our servers. Please try again later.",
-            retryTitle: "Try Again",
+            title: String(localized: "Server Error", bundle: .module),
+            message: String(localized: "We're having trouble connecting to our servers. Please try again later.", bundle: .module),
+            retryTitle: String(localized: "Try Again", bundle: .module),
             onRetry: onRetry
         )
     }
@@ -181,9 +181,9 @@ public extension ErrorStateView {
     ) -> ErrorStateView {
         ErrorStateView(
             icon: "lock.fill",
-            title: "Permission Required",
-            message: "Please grant \(feature) permission in Settings to use this feature.",
-            retryTitle: "Open Settings",
+            title: String(localized: "Permission Required", bundle: .module),
+            message: String(localized: "Please grant \(feature) permission in Settings to use this feature.", bundle: .module),
+            retryTitle: String(localized: "Open Settings", bundle: .module),
             onRetry: onOpenSettings
         )
     }
@@ -194,9 +194,9 @@ public extension ErrorStateView {
     ) -> ErrorStateView {
         ErrorStateView(
             icon: "arrow.clockwise.circle",
-            title: "Failed to Load",
-            message: "We couldn't load this content. Please try again.",
-            retryTitle: "Retry",
+            title: String(localized: "Failed to Load", bundle: .module),
+            message: String(localized: "We couldn't load this content. Please try again.", bundle: .module),
+            retryTitle: String(localized: "Retry", bundle: .module),
             onRetry: onRetry
         )
     }
