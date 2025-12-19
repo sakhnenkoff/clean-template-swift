@@ -51,6 +51,12 @@ This documentation is organized into focused files for better maintainability. E
   - Preview helpers and testing strategies
   - Test file templates
 
+- **Localization Guide**: @.claude/docs/localization-guide.md
+  - Native String Catalog (.xcstrings) workflow
+  - When to use `Text("key")` vs `String(localized: "key")`
+  - Asset symbol generation for type-safe images/colors
+  - Translation workflow for agents
+
 ### Required Actions
 
 When the user triggers specific requests, follow these action workflows:
@@ -165,5 +171,6 @@ For detailed information on any topic:
 - **Creating new features**: Check the relevant ACTION document
 - **UI components**: Check design-system-usage.md
 - **Testing patterns**: Check testing-guide.md
+- **Localization**: Check localization-guide.md
 
 All documentation files are in `.claude/docs/` directory.

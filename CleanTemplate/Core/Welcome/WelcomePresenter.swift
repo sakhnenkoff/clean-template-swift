@@ -58,7 +58,6 @@ class WelcomePresenter {
 }
 
 extension WelcomePresenter {
-    
     enum Event: LoggableEvent {
         case onAppear(delegate: WelcomeDelegate)
         case onDisappear(delegate: WelcomeDelegate)
