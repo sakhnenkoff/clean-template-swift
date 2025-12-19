@@ -9,7 +9,6 @@ import SwiftUI
 @Observable
 @MainActor
 class WelcomePresenter {
-    
     private let interactor: WelcomeInteractor
     private let router: WelcomeRouter
 

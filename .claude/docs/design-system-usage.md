@@ -4,6 +4,215 @@ The DesignSystem package provides reusable UI components, colors, and typography
 
 ---
 
+## DSButton - Standardized Buttons
+
+### Basic Usage
+
+```swift
+import DesignSystem
+
+// Primary button (default)
+DSButton(title: "Submit", action: { })
+
+// With different styles
+DSButton(title: "Cancel", style: .secondary, action: { })
+DSButton(title: "Delete", style: .destructive, action: { })
+DSButton(title: "Learn More", style: .tertiary, action: { })
+
+// With sizes
+DSButton(title: "Small", size: .small, action: { })
+DSButton(title: "Medium", size: .medium, action: { })
+DSButton(title: "Large", size: .large, action: { })
+
+// With icon
+DSButton(title: "Add Item", icon: "plus", action: { })
+
+// Full width
+DSButton(title: "Continue", isFullWidth: true, action: { })
+
+// Loading state
+DSButton(title: "Saving...", isLoading: true, action: { })
+
+// Disabled
+DSButton(title: "Submit", isEnabled: false, action: { })
+```
+
+### Convenience Initializers
+
+```swift
+// Full-width CTA button
+DSButton.cta(title: "Get Started", isLoading: isSubmitting, action: { })
+
+// Destructive action with trash icon
+DSButton.destructive(title: "Delete Account", action: { })
+
+// Text-only link button
+DSButton.link(title: "Forgot Password?", action: { })
+```
+
+### Icon-Only Buttons
+
+```swift
+DSIconButton(icon: "heart.fill", style: .primary, size: .medium, action: { })
+DSIconButton(icon: "plus", style: .secondary, action: { })
+DSIconButton(icon: "xmark", style: .tertiary, size: .small, action: { })
+```
+
+### Button Styles
+
+| Style | Background | Text | Use Case |
+|-------|------------|------|----------|
+| `.primary` | Theme primary | White | Main actions |
+| `.secondary` | Clear + border | Theme primary | Secondary actions |
+| `.tertiary` | Clear | Theme primary | Links, text buttons |
+| `.destructive` | Error color | White | Delete, remove actions |
+
+---
+
+## EmptyStateView - Empty Content States
+
+### Basic Usage
+
+```swift
+import DesignSystem
+
+EmptyStateView(
+    icon: "folder",
+    title: "No Documents",
+    message: "Create your first document to get started",
+    actionTitle: "Create Document",
+    action: { createDocument() }
+)
+```
+
+### Convenience Initializers
+
+```swift
+// Search results
+EmptyStateView.noSearchResults(query: "swift tutorials", onClearSearch: { })
+
+// Empty list
+EmptyStateView.emptyList(
+    title: "No Tasks",
+    message: "Add tasks to get started",
+    actionTitle: "Add Task",
+    action: { }
+)
+
+// No favorites
+EmptyStateView.noFavorites(onBrowse: { })
+
+// No notifications
+EmptyStateView.noNotifications()
+```
+
+### View Modifier
+
+```swift
+List(items) { item in
+    ItemRow(item: item)
+}
+.emptyState(
+    items.isEmpty,
+    icon: "tray",
+    title: "No Items",
+    message: "Add items to see them here"
+)
+```
+
+---
+
+## ErrorStateView - Error States
+
+### Basic Usage
+
+```swift
+import DesignSystem
+
+// From an Error object
+ErrorStateView(error: someError, onRetry: { fetchData() })
+
+// Custom error
+ErrorStateView(
+    title: "Upload Failed",
+    message: "Please check your connection",
+    retryTitle: "Try Again",
+    onRetry: { retry() },
+    dismissTitle: "Cancel",
+    onDismiss: { dismiss() }
+)
+```
+
+### Convenience Initializers
+
+```swift
+// Network error
+ErrorStateView.networkError(onRetry: { })
+
+// Server error
+ErrorStateView.serverError(onRetry: { })
+
+// Permission denied
+ErrorStateView.permissionDenied(feature: "camera", onOpenSettings: { openSettings() })
+
+// Load failed
+ErrorStateView.loadFailed(onRetry: { })
+```
+
+### View Modifier
+
+```swift
+ContentView()
+    .errorState(error, retryAction: { fetchData() })
+```
+
+---
+
+## SkeletonView - Loading Placeholders
+
+### Basic Usage
+
+```swift
+import DesignSystem
+
+// Text lines
+SkeletonView(style: .text(lines: 3, lastLineWidth: 0.7))
+
+// Shapes
+SkeletonView(style: .circle(diameter: 60))
+SkeletonView(style: .rectangle(width: 100, height: 60))
+SkeletonView(style: .avatar(size: .medium))
+
+// Presets
+SkeletonView(style: .card)
+SkeletonView(style: .listRow)
+```
+
+### View Modifiers
+
+```swift
+// Replace content with skeleton
+Text("Hello World")
+    .skeleton(isLoading, style: .text(lines: 1))
+
+// Apply shimmer to existing content (uses redacted)
+ProfileView()
+    .shimmer(isLoading)
+```
+
+### Skeleton Styles
+
+| Style | Description |
+|-------|-------------|
+| `.text(lines:lastLineWidth:)` | Multiple text lines |
+| `.circle(diameter:)` | Circle shape |
+| `.rectangle(width:height:)` | Rectangle shape |
+| `.avatar(size:)` | Avatar placeholder (small/medium/large) |
+| `.card` | Card with image and text |
+| `.listRow` | List row with avatar and text |
+
+---
+
 ## ToastView - Notification System
 
 ### Basic Usage

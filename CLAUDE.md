@@ -39,6 +39,18 @@ This documentation is organized into focused files for better maintainability. E
   - Common mistakes to avoid
   - Quick lookup for frequently used features
 
+- **DesignSystem Usage**: @.claude/docs/design-system-usage.md
+  - DSButton, EmptyStateView, ErrorStateView, SkeletonView components
+  - ToastView and LoadingView modifiers
+  - Color extensions and typography system
+  - Copy/paste code snippets
+
+- **Testing Guide**: @.claude/docs/testing-guide.md
+  - Presenter unit testing with mock classes
+  - Accessibility identifier conventions for UI testing
+  - Preview helpers and testing strategies
+  - Test file templates
+
 ### Required Actions
 
 When the user triggers specific requests, follow these action workflows:
@@ -151,5 +163,7 @@ For detailed information on any topic:
 - **Architecture questions**: Check project-structure.md
 - **VIPER pattern questions**: Check viper-architecture.md
 - **Creating new features**: Check the relevant ACTION document
+- **UI components**: Check design-system-usage.md
+- **Testing patterns**: Check testing-guide.md
 
 All documentation files are in `.claude/docs/` directory.

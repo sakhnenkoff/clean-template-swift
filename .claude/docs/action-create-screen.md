@@ -57,6 +57,50 @@ ls ~/Library/Developer/Xcode/Templates/MyTemplates/VIPERTemplate.xctemplate
 - NEVER manually write VIPER files from scratch if templates are available
 - The templates ensure consistency with the project's architecture
 
+### Accessibility Identifiers
+
+Add accessibility identifiers to interactive elements for UI testing:
+
+```swift
+// In View
+Button("Settings") { presenter.onSettingsPressed() }
+    .buttonTestID("ScreenName", "Settings")
+
+Text(presenter.title)
+    .testID("ScreenName", "Title")
+```
+
+See @.claude/docs/testing-guide.md for full accessibility ID conventions.
+
+### LoggableEvent Defaults
+
+Event enums can use default implementations for `parameters` and `type`:
+
+```swift
+enum Event: LoggableEvent {
+    case onAppear
+    case buttonTapped
+
+    var eventName: String {
+        switch self {
+        case .onAppear: return "ScreenName_Appear"
+        case .buttonTapped: return "ScreenName_ButtonTap"
+        }
+    }
+    // parameters defaults to nil
+    // type defaults to .analytic
+}
+```
+
+Only override `parameters` when you need to pass data, and `type` for errors (`.severe`).
+
+### Testing the New Screen
+
+After creating a screen, add Presenter tests:
+- See @.claude/docs/testing-guide.md for testing patterns
+- Create `CleanTemplateUnitTests/PresenterTests/ScreenNamePresenterTests.swift`
+- Use MockGlobalRouter and MockGlobalInteractor base classes
+
 ---
 
 ## Manual VIPER Pattern (if templates unavailable)

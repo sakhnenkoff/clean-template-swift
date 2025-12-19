@@ -122,9 +122,4 @@ extension CoreBuilder {
             delegate: delegate
         )
     }
-
-}
-
-extension CoreRouter {
-    
 }

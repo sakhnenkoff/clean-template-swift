@@ -111,11 +111,7 @@ extension CoreBuilder {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let interactor = CoreInteractor(container: container)
-    let builder = CoreBuilder(interactor: interactor)
-
-    return RouterView { router in
-        builder.showcaseView(router: router, delegate: ShowcaseDelegate())
+    PreviewRouter { router in
+        DevPreview.builder.showcaseView(router: router, delegate: ShowcaseDelegate())
     }
 }

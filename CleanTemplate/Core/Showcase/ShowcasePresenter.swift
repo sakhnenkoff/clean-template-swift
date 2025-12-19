@@ -18,6 +18,7 @@ class ShowcasePresenter {
 
     var toast: Toast?
     var isLoading: Bool = false
+    var showSkeletonDemo: Bool = false
 
     // MARK: Storage Demo State
 

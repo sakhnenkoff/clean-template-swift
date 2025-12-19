@@ -1,0 +1,229 @@
+import SwiftUI
+
+/// A view for displaying empty state messages when content is unavailable.
+/// Use this for empty lists, search results with no matches, or when data hasn't been loaded yet.
+public struct EmptyStateView: View {
+    let icon: String?
+    let title: String
+    let message: String?
+    let actionTitle: String?
+    let action: (() -> Void)?
+
+    public init(
+        icon: String? = nil,
+        title: String,
+        message: String? = nil,
+        actionTitle: String? = nil,
+        action: (() -> Void)? = nil
+    ) {
+        self.icon = icon
+        self.title = title
+        self.message = message
+        self.actionTitle = actionTitle
+        self.action = action
+    }
+
+    public var body: some View {
+        VStack(spacing: DSSpacing.md) {
+            if let icon {
+                Image(systemName: icon)
+                    .font(.system(size: 48, weight: .light))
+                    .foregroundStyle(Color.textTertiary)
+            }
+
+            VStack(spacing: DSSpacing.sm) {
+                Text(title)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(Color.textPrimary)
+                    .multilineTextAlignment(.center)
+
+                if let message {
+                    Text(message)
+                        .font(.system(size: 14, weight: .regular))
+                        .foregroundStyle(Color.textSecondary)
+                        .multilineTextAlignment(.center)
+                }
+            }
+
+            if let actionTitle, let action {
+                Button(action: action) {
+                    Text(actionTitle)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, DSSpacing.lg)
+                        .padding(.vertical, DSSpacing.smd)
+                        .background(Color.themePrimary)
+                        .clipShape(RoundedRectangle(cornerRadius: DSSpacing.sm))
+                }
+                .padding(.top, DSSpacing.sm)
+            }
+        }
+        .padding(DSSpacing.xl)
+        .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - View Modifier
+
+public extension View {
+    /// Overlays an empty state when the condition is true.
+    /// - Parameters:
+    ///   - isEmpty: Whether to show the empty state
+    ///   - icon: Optional SF Symbol name
+    ///   - title: The main title text
+    ///   - message: Optional description message
+    ///   - actionTitle: Optional button title
+    ///   - action: Optional button action
+    /// - Returns: The view with an empty state overlay when applicable.
+    @ViewBuilder
+    func emptyState(
+        _ isEmpty: Bool,
+        icon: String? = nil,
+        title: String,
+        message: String? = nil,
+        actionTitle: String? = nil,
+        action: (() -> Void)? = nil
+    ) -> some View {
+        if isEmpty {
+            EmptyStateView(
+                icon: icon,
+                title: title,
+                message: message,
+                actionTitle: actionTitle,
+                action: action
+            )
+        } else {
+            self
+        }
+    }
+}
+
+// MARK: - Convenience Initializers
+
+public extension EmptyStateView {
+    /// Creates an empty state for search results with no matches.
+    static func noSearchResults(
+        query: String? = nil,
+        onClearSearch: (() -> Void)? = nil
+    ) -> EmptyStateView {
+        EmptyStateView(
+            icon: "magnifyingglass",
+            title: "No Results Found",
+            message: query.map { "No results for \"\($0)\"" } ?? "Try a different search term",
+            actionTitle: onClearSearch != nil ? "Clear Search" : nil,
+            action: onClearSearch
+        )
+    }
+
+    /// Creates an empty state for an empty list.
+    static func emptyList(
+        title: String = "Nothing Here Yet",
+        message: String? = nil,
+        actionTitle: String? = nil,
+        action: (() -> Void)? = nil
+    ) -> EmptyStateView {
+        EmptyStateView(
+            icon: "tray",
+            title: title,
+            message: message,
+            actionTitle: actionTitle,
+            action: action
+        )
+    }
+
+    /// Creates an empty state for no favorites/bookmarks.
+    static func noFavorites(
+        onBrowse: (() -> Void)? = nil
+    ) -> EmptyStateView {
+        EmptyStateView(
+            icon: "heart",
+            title: "No Favorites",
+            message: "Items you favorite will appear here",
+            actionTitle: onBrowse != nil ? "Browse Items" : nil,
+            action: onBrowse
+        )
+    }
+
+    /// Creates an empty state for no notifications.
+    static func noNotifications() -> EmptyStateView {
+        EmptyStateView(
+            icon: "bell",
+            title: "No Notifications",
+            message: "You're all caught up!"
+        )
+    }
+}
+
+// MARK: - Previews
+
+#Preview("With Action") {
+    EmptyStateView(
+        icon: "folder",
+        title: "No Documents",
+        message: "Create your first document to get started",
+        actionTitle: "Create Document",
+        action: { print("Create tapped") }
+    )
+    .background(Color.backgroundPrimary)
+}
+
+#Preview("Without Action") {
+    EmptyStateView(
+        icon: "photo.on.rectangle.angled",
+        title: "No Photos",
+        message: "Photos you take will appear here"
+    )
+    .background(Color.backgroundPrimary)
+}
+
+#Preview("Minimal") {
+    EmptyStateView(
+        title: "No Data Available"
+    )
+    .background(Color.backgroundPrimary)
+}
+
+#Preview("Search Results") {
+    EmptyStateView.noSearchResults(
+        query: "Swift tutorials",
+        onClearSearch: { print("Clear search") }
+    )
+    .background(Color.backgroundPrimary)
+}
+
+#Preview("Empty List") {
+    EmptyStateView.emptyList(
+        title: "No Tasks",
+        message: "Add your first task to get started",
+        actionTitle: "Add Task",
+        action: { print("Add task") }
+    )
+    .background(Color.backgroundPrimary)
+}
+
+#Preview("View Modifier") {
+    let isEmpty = true
+
+    return List {
+        Text("Item 1")
+        Text("Item 2")
+    }
+    .emptyState(
+        isEmpty,
+        icon: "list.bullet",
+        title: "No Items",
+        message: "Add some items to see them here"
+    )
+}
+
+#Preview("Dark Mode") {
+    EmptyStateView(
+        icon: "star",
+        title: "No Favorites",
+        message: "Items you star will appear here",
+        actionTitle: "Browse",
+        action: {}
+    )
+    .background(Color.backgroundPrimary)
+    .preferredColorScheme(.dark)
+}
