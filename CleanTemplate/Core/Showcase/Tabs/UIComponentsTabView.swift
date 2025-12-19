@@ -211,12 +211,15 @@ struct UIComponentsTabView: View {
             Button("Show Success Toast") {
                 presenter.showSuccessToast()
             }
+
             Button("Show Error Toast") {
                 presenter.showErrorToast()
             }
+
             Button("Show Warning Toast") {
                 presenter.showWarningToast()
             }
+
             Button("Show Info Toast") {
                 presenter.showInfoToast()
             }

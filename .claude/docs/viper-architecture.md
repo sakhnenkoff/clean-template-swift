@@ -21,6 +21,7 @@ Screen views follow the VIPER pattern and have different rules than reusable com
 - ❌ **NO business logic** in the view - all logic goes in Presenter
 - ❌ **NO network calls** or data persistence - use Interactor/Manager
 - ❌ `@StateObject` or `@ObservedObject` (use `@State` with `@Observable` Presenter instead)
+- ❌ **NEVER use `onTapGesture` for interactive elements** - always use `Button` (see Button Usage Rules below)
 
 **Example Screen View:**
 ```swift
@@ -138,6 +139,86 @@ struct ProfileCardView: View {
         isLoading: false,
         onTap: nil
     )
+}
+```
+
+---
+
+## 🔘 Button Usage Rules
+
+**CRITICAL: NEVER use `onTapGesture` for interactive elements that should be buttons.**
+
+### Why This Matters
+
+Using `onTapGesture` instead of `Button` breaks:
+- ❌ **Accessibility** - VoiceOver users cannot interact properly
+- ❌ **Visual feedback** - No tap highlight or press state
+- ❌ **Keyboard navigation** - Cannot be focused or activated via keyboard
+- ❌ **System button behaviors** - No automatic disabled states, loading states, etc.
+
+### Correct Button Usage
+
+```swift
+// ✅ CORRECT - Use Button
+Button("Submit") {
+    presenter.onSubmitTapped()
+}
+
+// ✅ CORRECT - Button with custom label
+Button {
+    presenter.onItemTapped()
+} label: {
+    Label("Settings", systemImage: "gear")
+}
+
+// ✅ CORRECT - Use .anyButton() or .asButton() modifier
+Text("Tap Me")
+    .anyButton(.press) {
+        presenter.onTapped()
+    }
+```
+
+### Incorrect Usage
+
+```swift
+// ❌ WRONG - Never use onTapGesture for buttons
+Text("Submit")
+    .onTapGesture {
+        presenter.onSubmitTapped()
+    }
+
+// ❌ WRONG - Never use onTapGesture for interactive elements
+Label("Settings", systemImage: "gear")
+    .onTapGesture {
+        presenter.openSettings()
+    }
+```
+
+### List Button Behavior
+
+In SwiftUI `List`, buttons expand their tap area to fill the entire row. This is **expected behavior** for accessibility and usability:
+
+```swift
+// This is CORRECT - the full row being tappable is intentional
+List {
+    Section("Actions") {
+        Button("Action 1") { presenter.action1() }
+        Button("Action 2") { presenter.action2() }
+    }
+}
+```
+
+If you need multiple interactive elements in a single list row, structure them appropriately:
+
+```swift
+// Multiple buttons in one row - use HStack
+List {
+    HStack {
+        Button("Edit") { presenter.edit() }
+        Spacer()
+        Button("Delete") { presenter.delete() }
+            .foregroundStyle(Color.destructive)
+    }
 }
 ```
 

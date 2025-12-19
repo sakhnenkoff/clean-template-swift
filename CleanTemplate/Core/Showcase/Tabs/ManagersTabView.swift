@@ -45,6 +45,7 @@ struct ManagersTabView: View {
                     await presenter.addXPPoints(10)
                 }
             }
+
             Button("Add 50 XP") {
                 Task {
                     await presenter.addXPPoints(50)
