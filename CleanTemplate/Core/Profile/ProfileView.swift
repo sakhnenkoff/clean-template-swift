@@ -40,12 +40,8 @@ struct ProfileView: View {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let builder = CoreBuilder(interactor: CoreInteractor(container: container))
-    let delegate = ProfileDelegate()
-    
-    return RouterView { router in
-        builder.profileView(router: router, delegate: delegate)
+    PreviewRouter { router in
+        DevPreview.builder.profileView(router: router, delegate: ProfileDelegate())
     }
 }
 

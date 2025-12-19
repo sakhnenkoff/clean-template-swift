@@ -114,7 +114,7 @@ extension CreateAccountPresenter {
         
         var type: LogType {
             switch self {
-            case .appleAuthFail:
+            case .appleAuthFail, .googleAuthFail:
                 return .severe
             default:
                 return .analytic

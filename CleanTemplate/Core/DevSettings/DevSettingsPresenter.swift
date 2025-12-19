@@ -107,20 +107,6 @@ extension DevSettingsPresenter {
             case .onDisappear:          return "TestView_Disappear"
             }
         }
-        
-        var parameters: [String: Any]? {
-            switch self {
-            default:
-                return nil
-            }
-        }
-        
-        var type: LogType {
-            switch self {
-            default:
-                return .analytic
-            }
-        }
     }
     
 }

@@ -58,12 +58,7 @@ extension CoreRouter {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let interactor = CoreInteractor(container: container)
-    let builder = CoreBuilder(interactor: interactor)
-    let delegate = OnboardingDelegate()
-
-    return RouterView { router in
-        builder.onboardingView(router: router, delegate: delegate)
+    PreviewRouter { router in
+        DevPreview.builder.onboardingView(router: router, delegate: OnboardingDelegate())
     }
 }

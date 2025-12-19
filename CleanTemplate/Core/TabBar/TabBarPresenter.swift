@@ -101,13 +101,6 @@ extension TabBarPresenter {
                 return params
             }
         }
-
-        var type: LogType {
-            switch self {
-            default:
-                return .analytic
-            }
-        }
     }
 
 }

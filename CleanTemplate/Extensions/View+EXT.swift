@@ -2,9 +2,10 @@
 //  View+EXT.swift
 //  CleanTemplate
 //
-//  
+//
 //
 import SwiftUI
+import DesignSystem
 
 extension View {
     func any() -> AnyView {
@@ -35,11 +36,11 @@ extension View {
 extension View {
     func callToActionButton(
         font: Font = .headline,
-        foregroundColor: Color = .white,
+        foregroundColor: Color = .textOnAccent,
         backgroundColor: Color = .themeAccent,
-        verticalPadding: CGFloat? = 12,
+        verticalPadding: CGFloat? = DSSpacing.smd,
         horizontalPadding: CGFloat? = nil,
-        cornerRadius: CGFloat = 16
+        cornerRadius: CGFloat = DSSpacing.md
     ) -> some View {
         self
             .font(font)

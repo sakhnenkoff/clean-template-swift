@@ -79,18 +79,9 @@ extension WelcomePresenter {
             case .onAppear(delegate: let delegate), .onDisappear(delegate: let delegate):
                 return delegate.eventParameters
             case .didSignIn(isNewUser: let isNewUser):
-                return [
-                    "is_new_user": isNewUser
-                ]
+                return ["is_new_user": isNewUser]
             default:
                 return nil
-            }
-        }
-        
-        var type: LogType {
-            switch self {
-            default:
-                return .analytic
             }
         }
     }

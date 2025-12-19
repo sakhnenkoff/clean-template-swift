@@ -99,10 +99,7 @@ struct WelcomeView: View {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let builder = CoreBuilder(interactor: CoreInteractor(container: container))
-    
-    return builder.onboardingFlow()
+    DevPreview.builder.onboardingFlow()
 }
 
 extension CoreBuilder {

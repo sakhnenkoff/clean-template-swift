@@ -50,13 +50,6 @@ extension ProfilePresenter {
                 return nil
             }
         }
-        
-        var type: LogType {
-            switch self {
-            default:
-                return .analytic
-            }
-        }
     }
 
 }

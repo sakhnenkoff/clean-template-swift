@@ -109,11 +109,8 @@ struct DevSettingsView: View {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let builder = CoreBuilder(interactor: CoreInteractor(container: container))
-    
-    return RouterView { router in
-        builder.devSettingsView(router: router)
+    PreviewRouter { router in
+        DevPreview.builder.devSettingsView(router: router)
     }
 }
 

@@ -113,11 +113,8 @@ extension CoreRouter {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let builder = CoreBuilder(interactor: CoreInteractor(container: container))
-        
-    return RouterView { router in
-        builder.createAccountView(router: router)
+    PreviewRouter { router in
+        DevPreview.builder.createAccountView(router: router)
             .frame(maxHeight: 400)
             .frame(maxHeight: .infinity, alignment: .bottom)
     }

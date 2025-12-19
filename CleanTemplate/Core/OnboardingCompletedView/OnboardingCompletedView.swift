@@ -54,14 +54,8 @@ struct OnboardingCompletedView: View {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let builder = CoreBuilder(interactor: CoreInteractor(container: container))
-    
-    return RouterView { router in
-        builder.onboardingCompletedView(
-            router: router,
-            delegate: OnboardingCompletedDelegate()
-        )
+    PreviewRouter { router in
+        DevPreview.builder.onboardingCompletedView(router: router, delegate: OnboardingCompletedDelegate())
     }
 }
 

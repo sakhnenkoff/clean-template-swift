@@ -68,11 +68,8 @@ struct PaywallView: View {
 }
 
 #Preview("Paywall") {
-    let container = DevPreview.shared.container()
-    let builder = CoreBuilder(interactor: CoreInteractor(container: container))
-
-    return RouterView { router in
-        builder.paywallView(router: router)
+    PreviewRouter { router in
+        DevPreview.builder.paywallView(router: router)
     }
 }
 

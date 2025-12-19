@@ -59,10 +59,7 @@ struct TabBarView: View {
 }
 
 #Preview("Real tabs") {
-    let container = DevPreview.shared.container()
-    let interactor = CoreInteractor(container: container)
-    let builder = CoreBuilder(interactor: interactor)
-    return builder.coreModuleEntryView()
+    DevPreview.builder.coreModuleEntryView()
 }
 
 extension CoreBuilder {

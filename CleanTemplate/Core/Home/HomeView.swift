@@ -65,13 +65,8 @@ struct HomeView: View {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let interactor = CoreInteractor(container: container)
-    let builder = CoreBuilder(interactor: interactor)
-    let delegate = HomeDelegate()
-    
-    return RouterView { router in
-        builder.homeView(router: router, delegate: delegate)
+    PreviewRouter { router in
+        DevPreview.builder.homeView(router: router, delegate: HomeDelegate())
     }
 }
 

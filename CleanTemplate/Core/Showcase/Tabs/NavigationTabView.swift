@@ -61,15 +61,12 @@ struct NavigationTabView: View {
 }
 
 #Preview {
-    let container = DevPreview.shared.container()
-    let interactor = CoreInteractor(container: container)
-    let builder = CoreBuilder(interactor: interactor)
-
-    return RouterView { router in
+    PreviewRouter { router in
+        let builder = DevPreview.builder
         List {
             NavigationTabView(
                 presenter: ShowcasePresenter(
-                    interactor: interactor,
+                    interactor: DevPreview.interactor,
                     router: CoreRouter(router: router, builder: builder)
                 )
             )
